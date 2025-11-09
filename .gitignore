@@ -1,5 +1,16 @@
-# Visual Studio temporary files
+# Visual Studio 
 .vs/
-*.user
 *.suo
-*.cache
+*.user
+*.bak
+*.ncb
+*.pdb
+*.obj
+ 
+# Binaries (Derleme Çıktıları)
+[Bb]in/
+[Oo]bj/
+ 
+# Packages (Paketler)
+packages/
+*.nupkg
