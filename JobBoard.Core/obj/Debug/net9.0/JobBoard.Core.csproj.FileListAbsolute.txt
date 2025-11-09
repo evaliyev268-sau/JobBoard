@@ -1,0 +1,15 @@
+C:\Users\Elvin\JobBoard\JobBoard.Core\bin\Debug\net9.0\JobBoard.Core.deps.json
+C:\Users\Elvin\JobBoard\JobBoard.Core\bin\Debug\net9.0\JobBoard.Core.runtimeconfig.json
+C:\Users\Elvin\JobBoard\JobBoard.Core\bin\Debug\net9.0\JobBoard.Core.dll
+C:\Users\Elvin\JobBoard\JobBoard.Core\bin\Debug\net9.0\JobBoard.Core.pdb
+C:\Users\Elvin\JobBoard\JobBoard.Core\obj\Debug\net9.0\JobBoard.Core.csproj.AssemblyReference.cache
+C:\Users\Elvin\JobBoard\JobBoard.Core\obj\Debug\net9.0\JobBoard.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Elvin\JobBoard\JobBoard.Core\obj\Debug\net9.0\JobBoard.Core.AssemblyInfoInputs.cache
+C:\Users\Elvin\JobBoard\JobBoard.Core\obj\Debug\net9.0\JobBoard.Core.AssemblyInfo.cs
+C:\Users\Elvin\JobBoard\JobBoard.Core\obj\Debug\net9.0\JobBoard.Core.csproj.CoreCompileInputs.cache
+C:\Users\Elvin\JobBoard\JobBoard.Core\obj\Debug\net9.0\JobBoard.Core.sourcelink.json
+C:\Users\Elvin\JobBoard\JobBoard.Core\obj\Debug\net9.0\JobBoard.Core.dll
+C:\Users\Elvin\JobBoard\JobBoard.Core\obj\Debug\net9.0\refint\JobBoard.Core.dll
+C:\Users\Elvin\JobBoard\JobBoard.Core\obj\Debug\net9.0\JobBoard.Core.pdb
+C:\Users\Elvin\JobBoard\JobBoard.Core\obj\Debug\net9.0\JobBoard.Core.genruntimeconfig.cache
+C:\Users\Elvin\JobBoard\JobBoard.Core\obj\Debug\net9.0\ref\JobBoard.Core.dll
