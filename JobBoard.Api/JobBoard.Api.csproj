@@ -9,12 +9,19 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.10">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.10" />
     <PackageReference Include="RabbitMQ.Client" Version="7.2.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\JobBoard.Core\JobBoard.Core.csproj" />
+    <ProjectReference Include="..\JobBoard.Application\JobBoard.Application.csproj" />
+    <ProjectReference Include="..\JobBoard.Infrastructure\JobBoard.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

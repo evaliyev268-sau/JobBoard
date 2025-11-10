@@ -1,0 +1,16 @@
+C:\Users\Elvin\JobBoard\JobBoard.Application\bin\Debug\net9.0\JobBoard.Application.deps.json
+C:\Users\Elvin\JobBoard\JobBoard.Application\bin\Debug\net9.0\JobBoard.Application.dll
+C:\Users\Elvin\JobBoard\JobBoard.Application\bin\Debug\net9.0\JobBoard.Application.pdb
+C:\Users\Elvin\JobBoard\JobBoard.Application\bin\Debug\net9.0\JobBoard.Core.dll
+C:\Users\Elvin\JobBoard\JobBoard.Application\bin\Debug\net9.0\JobBoard.Core.pdb
+C:\Users\Elvin\JobBoard\JobBoard.Application\obj\Debug\net9.0\JobBoard.Application.csproj.AssemblyReference.cache
+C:\Users\Elvin\JobBoard\JobBoard.Application\obj\Debug\net9.0\JobBoard.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Elvin\JobBoard\JobBoard.Application\obj\Debug\net9.0\JobBoard.Application.AssemblyInfoInputs.cache
+C:\Users\Elvin\JobBoard\JobBoard.Application\obj\Debug\net9.0\JobBoard.Application.AssemblyInfo.cs
+C:\Users\Elvin\JobBoard\JobBoard.Application\obj\Debug\net9.0\JobBoard.Application.csproj.CoreCompileInputs.cache
+C:\Users\Elvin\JobBoard\JobBoard.Application\obj\Debug\net9.0\JobBoard.Application.sourcelink.json
+C:\Users\Elvin\JobBoard\JobBoard.Application\obj\Debug\net9.0\JobBoard.93A6DEA3.Up2Date
+C:\Users\Elvin\JobBoard\JobBoard.Application\obj\Debug\net9.0\JobBoard.Application.dll
+C:\Users\Elvin\JobBoard\JobBoard.Application\obj\Debug\net9.0\refint\JobBoard.Application.dll
+C:\Users\Elvin\JobBoard\JobBoard.Application\obj\Debug\net9.0\JobBoard.Application.pdb
+C:\Users\Elvin\JobBoard\JobBoard.Application\obj\Debug\net9.0\ref\JobBoard.Application.dll
