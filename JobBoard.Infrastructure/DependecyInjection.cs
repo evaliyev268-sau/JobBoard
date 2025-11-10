@@ -4,11 +4,7 @@ using JobBoard.Infrastructure.Messaging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 
 namespace JobBoard.Infrastructure
 {
@@ -19,19 +15,22 @@ namespace JobBoard.Infrastructure
             var cs = config.GetConnectionString("Default") ?? "DataSource=jobboard.db";
             services.AddDbContext<AppDbContext>(opt=>opt.UseSqlite(cs));
 
-            var rmq=new RabbitMqOptions();
-            config.GetSection("RabbitMq").Bind(rmq);
-            if(!string.IsNullOrEmpty(rmq.Host))
-            {
-                services.AddSingleton<IRabbitMqPublisher, RabbitMqPublisher>();
-                services.AddSingleton(rmq);
+            services.AddScoped<IJobRepository,Repositories.EfJobRepository>();
 
-            }
-            else
-            {
-                services.AddSingleton<IRabbitMqPublisher,RabbitMqPublisher>();
-            }
-            
+            services.Configure<RabbitMqOptions>(config.GetSection("RabbitMq"));
+
+            services.AddSingleton<IRabbitMqPublisher>(sp => {
+                var opt = sp.GetRequiredService<IOptions<RabbitMqOptions>>().Value;
+                var host = opt.Host?.Trim();
+                if(string.IsNullOrWhiteSpace(host))
+                {
+                    return new NoopRabbitMqPublisher();
+                }
+
+                return new RabbitMqPublisher(Options.Create(opt));
+            });
+
+
             return services;
         }
     }
