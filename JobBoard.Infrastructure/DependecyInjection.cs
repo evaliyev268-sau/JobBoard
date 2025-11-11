@@ -21,14 +21,18 @@ namespace JobBoard.Infrastructure
 
             services.AddSingleton<IRabbitMqPublisher>(sp => {
                 var opt = sp.GetRequiredService<IOptions<RabbitMqOptions>>().Value;
-                var host = opt.Host?.Trim();
-                if(string.IsNullOrWhiteSpace(host))
+               
+                if(string.IsNullOrWhiteSpace(opt.Host))
                 {
                     return new NoopRabbitMqPublisher();
+                    
                 }
 
-                return new RabbitMqPublisher(Options.Create(opt));
+                return new RabbitMqPublisher(sp.GetRequiredService<IOptions<RabbitMqOptions>>());
+
             });
+
+            services.AddHostedService<RabbitMqConsumerService>();
 
 
             return services;

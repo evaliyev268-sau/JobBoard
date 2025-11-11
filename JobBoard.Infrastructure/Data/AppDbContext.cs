@@ -15,6 +15,6 @@ namespace JobBoard.Infrastructure.Data
         public DbSet<Job> Jobs=>Set<Job>();
         public DbSet<JobApplication> JobApplications=>Set<JobApplication>();
 
-
+        
     }
 }
