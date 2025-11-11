@@ -38,7 +38,12 @@ namespace JobBoard.Infrastructure.Repositories
             return _db.Jobs.AsNoTracking().OrderByDescending(x=>x.PostedAt).ToListAsync(ct);
         }
 
-        public Task<Job?> GetByIdAsync(int id, CancellationToken ct = default)
+        public Task<List<JobApplication>> GetApplicationsByJobIdAsync(int jobId, CancellationToken ct = default)
+        {
+            return _db.JobApplications.AsNoTracking().Where(a=>a.JobId==jobId).OrderByDescending(a=>a.AppliedAt).ToListAsync(ct);
+        }
+
+        public Task<Job?> GetJobApplicationsByIdAsync(int id, CancellationToken ct = default)
         {
            return _db.Jobs.AsNoTracking().FirstOrDefaultAsync(x=>x.Id==id,ct);
         }

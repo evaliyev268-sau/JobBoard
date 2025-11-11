@@ -58,9 +58,17 @@ namespace JobBoard.Application.Services
             return items.Select(j => new JobDto(j.Id, j.Title, j.Description)).ToList();
         }
 
+        public async Task<List<JobApplicationDto>> GetApplicationAsync(int jobId, CancellationToken ct = default)
+        {
+           
+            var items = await _repo.GetApplicationsByJobIdAsync(jobId, ct);
+            return items.Select(a => new JobApplicationDto(a.Id, a.JobId, a.ApplicantName, a.ApplicantEmail, a.AppliedAt)).ToList();
+
+        }
+
         public async Task<JobDto?> GetByIdAsync(int id, CancellationToken ct = default)
         {
-            var j = await _repo.GetByIdAsync(id, ct);
+            var j = await _repo.GetJobApplicationsByIdAsync(id, ct);
             return j is null ? null : new JobDto(j.Id, j.Title, j.Description);
 
         }
