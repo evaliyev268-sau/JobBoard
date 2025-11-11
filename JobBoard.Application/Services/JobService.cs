@@ -1,5 +1,6 @@
 ﻿using JobBoard.Application.Abstractions;
 using JobBoard.Application.DTOs;
+using JobBoard.Application.Events;
 using JobBoard.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -30,12 +31,16 @@ namespace JobBoard.Application.Services
 
             app=await _repo.AddApplicationAsync(app, ct);
 
-            await _publisher.PublishAsync(new {
+            var evt=new JobApplicationCreatedEvent
+            {
                 JobId=jobId,
-                ApplicantName=request.ApplicantName,
-                ApplicantEmail=request.ApplicantEmail,
+                ApplicationId=app.Id,
+                ApplicantName =app.ApplicantName,
+                ApplicantEmail=app.ApplicantEmail,
                 AppliedAt=app.AppliedAt
-            }, ct);
+            };
+
+            await _publisher.PublishAsync(evt,ct);
             return app.Id;
 
         }

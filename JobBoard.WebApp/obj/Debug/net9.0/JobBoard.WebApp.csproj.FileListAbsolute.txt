@@ -138,4 +138,3 @@ C:\Users\Elvin\JobBoard\JobBoard.WebApp\obj\Debug\net9.0\refint\JobBoard.WebApp.
 C:\Users\Elvin\JobBoard\JobBoard.WebApp\obj\Debug\net9.0\JobBoard.WebApp.pdb
 C:\Users\Elvin\JobBoard\JobBoard.WebApp\obj\Debug\net9.0\JobBoard.WebApp.genruntimeconfig.cache
 C:\Users\Elvin\JobBoard\JobBoard.WebApp\obj\Debug\net9.0\ref\JobBoard.WebApp.dll
-C:\Users\Elvin\JobBoard\JobBoard.WebApp\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
