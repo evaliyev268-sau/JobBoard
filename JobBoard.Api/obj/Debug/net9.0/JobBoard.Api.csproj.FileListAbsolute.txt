@@ -162,3 +162,5 @@ C:\Users\Elvin\JobBoard\JobBoard.Api\obj\Debug\net9.0\refint\JobBoard.Api.dll
 C:\Users\Elvin\JobBoard\JobBoard.Api\obj\Debug\net9.0\JobBoard.Api.pdb
 C:\Users\Elvin\JobBoard\JobBoard.Api\obj\Debug\net9.0\JobBoard.Api.genruntimeconfig.cache
 C:\Users\Elvin\JobBoard\JobBoard.Api\obj\Debug\net9.0\ref\JobBoard.Api.dll
+C:\Users\Elvin\JobBoard\JobBoard.Api\bin\Debug\net9.0\JobBoard.Api.staticwebassets.runtime.json
+C:\Users\Elvin\JobBoard\JobBoard.Api\obj\Debug\net9.0\compressed\jevzwu5q1s-0avvq3xd4x.gz

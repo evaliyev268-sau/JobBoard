@@ -1,0 +1,180 @@
+﻿<!doctype html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <title>JobBoard (Local)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        body {
+            font-family: system-ui, Arial, sans-serif;
+            margin: 24px;
+        }
+
+        h1 {
+            margin-bottom: 4px;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 12px 0;
+        }
+
+        label {
+            display: block;
+            margin: 8px 0 4px;
+        }
+
+        input, textarea, select, button {
+            padding: 8px;
+            font-size: 15px;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .row {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .col {
+            flex: 1 1 350px;
+        }
+
+        .muted {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .ok {
+            color: #0a6;
+        }
+
+        .err {
+            color: #c00;
+            white-space: pre-wrap;
+        }
+
+        code {
+            background: #f6f8fa;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>JobBoard</h1>
+    <div class="muted">Local demo: .NET Web API + RabbitMQ 7 — Swagger yerine bu sayfayı kullan.</div>
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <h3>Yeni İş İlanı Oluştur</h3>
+                <label for="title">Başlık</label>
+                <input id="title" placeholder="Örn: Junior .NET Developer" />
+                <label for="desc">Açıklama</label>
+                <textarea id="desc" rows="3" placeholder="Kısa açıklama"></textarea>
+                <div style="margin-top:8px;">
+                    <button onclick="createJob()">Oluştur</button>
+                </div>
+                <div id="createJobMsg" class="muted"></div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card">
+                <h3>İşleri Listele</h3>
+                <button onclick="loadJobs()">Yenile</button>
+                <ul id="jobs" class="muted"></ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Seçili İlan’a Başvur</h3>
+        <label for="jobId">Job Id</label>
+        <input id="jobId" type="number" placeholder="Örn: 1" />
+        <label for="appName">Ad Soyad</label>
+        <input id="appName" placeholder="Örn: Ali Veli" />
+        <label for="appEmail">E‑posta</label>
+        <input id="appEmail" placeholder="ali@example.com" />
+        <div style="margin-top:8px;">
+            <button onclick="apply()">Başvur</button>
+        </div>
+        <div id="applyMsg" class="muted"></div>
+    </div>
+
+    <div class="card">
+        <h3>RabbitMQ Gözlem</h3>
+        <div class="muted">
+            RabbitMQ Management UI: <a href="http://localhost:15672" target="_blank">http://localhost:15672</a> (guest/guest).<br />
+            Kuyruk: <code>job_applications</code>. Apply sonrası mesaj publish edilir, consumer işler.
+        </div>
+    </div>
+
+    <div id="error" class="err"></div>
+
+    <script>const api = ""; // aynı host/porttan servis ediyoruz
+
+async function createJob() {
+  clearMsgs();
+  const title = document.getElementById("title").value.trim();
+  const description = document.getElementById("desc").value.trim();
+  if (!title || !description) return showErr("Başlık ve açıklama zorunlu.");
+
+  const res = await fetch(api + "/api/Jobs", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({title, description})
+  });
+  if (!res.ok) return showErr("Job oluşturulamadı: " + res.status + " " + res.statusText);
+  document.getElementById("createJobMsg").innerHTML = "<span class='ok'>Oluşturuldu.</span>";
+  await loadJobs();
+}
+
+async function loadJobs() {
+  clearMsgs();
+  const ul = document.getElementById("jobs");
+  ul.innerHTML = "Yükleniyor...";
+  const res = await fetch(api + "/api/Jobs");
+  if (!res.ok) return showErr("Jobs alınamadı: " + res.status + " " + res.statusText);
+  const data = await res.json();
+  if (!Array.isArray(data) || data.length === 0) {
+    ul.innerHTML = "<span class='muted'>Kayıt yok.</span>";
+    return;
+  }
+  ul.innerHTML = data.map(j => `<li>#${j.id} — ${j.title}</li>`).join("");
+}
+
+async function apply() {
+  clearMsgs();
+  const id = parseInt(document.getElementById("jobId").value, 10);
+  const applicantName = document.getElementById("appName").value.trim();
+  const applicantEmail = document.getElementById("appEmail").value.trim();
+  if (!id || !applicantName || !applicantEmail) return showErr("Tüm alanlar zorunlu.");
+
+  const res = await fetch(api + `/api/Jobs/${id}/apply`, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ applicantName, applicantEmail })
+  });
+  if (!res.ok) return showErr("Başvuru başarısız: " + res.status + " " + res.statusText);
+
+  document.getElementById("applyMsg").innerHTML =
+    "<span class='ok'>Başvuru alındı. RabbitMQ kuyruğuna mesaj gönderildi.</span>";
+}
+
+function showErr(msg) {
+  document.getElementById("error").textContent = msg;
+}
+function clearMsgs() {
+  document.getElementById("error").textContent = "";
+  document.getElementById("createJobMsg").textContent = "";
+  document.getElementById("applyMsg").textContent = "";
+}</script>
+</body>
+</html>
