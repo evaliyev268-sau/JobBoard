@@ -10,7 +10,7 @@ namespace JobBoard.Infrastructure.Messaging
     {
         public string Host { get; set; } = String.Empty;
         public int Port { get; set; } = 5671;
-        public string Username { get; set; } = String.Empty;
+        public string UserName { get; set; } = String.Empty;
         public string Password { get; set; } = String.Empty;
         public string VirtualHost { get; set; } = "/";
 

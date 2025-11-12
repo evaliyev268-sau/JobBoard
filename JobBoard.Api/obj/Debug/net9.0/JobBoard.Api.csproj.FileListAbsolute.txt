@@ -163,4 +163,15 @@ C:\Users\Elvin\JobBoard\JobBoard.Api\obj\Debug\net9.0\JobBoard.Api.pdb
 C:\Users\Elvin\JobBoard\JobBoard.Api\obj\Debug\net9.0\JobBoard.Api.genruntimeconfig.cache
 C:\Users\Elvin\JobBoard\JobBoard.Api\obj\Debug\net9.0\ref\JobBoard.Api.dll
 C:\Users\Elvin\JobBoard\JobBoard.Api\bin\Debug\net9.0\JobBoard.Api.staticwebassets.runtime.json
-C:\Users\Elvin\JobBoard\JobBoard.Api\obj\Debug\net9.0\compressed\jevzwu5q1s-ky5pkz55l0.gz
+C:\Users\Elvin\JobBoard\JobBoard.Api\bin\Debug\net9.0\HealthChecks.Rabbitmq.dll
+C:\Users\Elvin\JobBoard\JobBoard.Api\bin\Debug\net9.0\Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore.dll
+C:\Users\Elvin\JobBoard\JobBoard.Api\bin\Debug\net9.0\Serilog.dll
+C:\Users\Elvin\JobBoard\JobBoard.Api\bin\Debug\net9.0\Serilog.AspNetCore.dll
+C:\Users\Elvin\JobBoard\JobBoard.Api\bin\Debug\net9.0\Serilog.Extensions.Hosting.dll
+C:\Users\Elvin\JobBoard\JobBoard.Api\bin\Debug\net9.0\Serilog.Extensions.Logging.dll
+C:\Users\Elvin\JobBoard\JobBoard.Api\bin\Debug\net9.0\Serilog.Formatting.Compact.dll
+C:\Users\Elvin\JobBoard\JobBoard.Api\bin\Debug\net9.0\Serilog.Settings.Configuration.dll
+C:\Users\Elvin\JobBoard\JobBoard.Api\bin\Debug\net9.0\Serilog.Sinks.Console.dll
+C:\Users\Elvin\JobBoard\JobBoard.Api\bin\Debug\net9.0\Serilog.Sinks.Debug.dll
+C:\Users\Elvin\JobBoard\JobBoard.Api\bin\Debug\net9.0\Serilog.Sinks.File.dll
+C:\Users\Elvin\JobBoard\JobBoard.Api\obj\Debug\net9.0\compressed\jevzwu5q1s-wxx887ar8e.gz

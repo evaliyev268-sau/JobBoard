@@ -1,0 +1,8 @@
+2025-11-12 05:28:57.589 +03:00 [INF] RabbitMqConsumerService started and connected to RabbitMQ at rabbit.lmq.cloudamqp.com:5671
+2025-11-12 05:28:57.740 +03:00 [INF] Now listening on: http://localhost:5199
+2025-11-12 05:28:57.744 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-12 05:28:57.748 +03:00 [INF] Hosting environment: Development
+2025-11-12 05:28:57.751 +03:00 [INF] Content root path: C:\Users\Elvin\JobBoard\JobBoard.Api
+2025-11-12 05:28:57.756 +03:00 [INF] App started in Development
+2025-11-12 05:29:20.213 +03:00 [WRN] Failed to determine the https port for redirect.
+2025-11-12 05:48:10.827 +03:00 [INF] Application is shutting down...

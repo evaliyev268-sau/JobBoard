@@ -29,7 +29,7 @@ namespace JobBoard.Infrastructure.Messaging
             {
                 HostName = _opt.Host,
                 Port = _opt.Port,
-                UserName = _opt.Username,
+                UserName = _opt.UserName,
                 Password = _opt.Password,
                 VirtualHost = _opt.VirtualHost,
                 AutomaticRecoveryEnabled = true,

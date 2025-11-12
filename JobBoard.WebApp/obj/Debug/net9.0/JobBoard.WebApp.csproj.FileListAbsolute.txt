@@ -138,3 +138,15 @@ C:\Users\Elvin\JobBoard\JobBoard.WebApp\obj\Debug\net9.0\refint\JobBoard.WebApp.
 C:\Users\Elvin\JobBoard\JobBoard.WebApp\obj\Debug\net9.0\JobBoard.WebApp.pdb
 C:\Users\Elvin\JobBoard\JobBoard.WebApp\obj\Debug\net9.0\JobBoard.WebApp.genruntimeconfig.cache
 C:\Users\Elvin\JobBoard\JobBoard.WebApp\obj\Debug\net9.0\ref\JobBoard.WebApp.dll
+C:\Users\Elvin\JobBoard\JobBoard.WebApp\bin\Debug\net9.0\HealthChecks.Rabbitmq.dll
+C:\Users\Elvin\JobBoard\JobBoard.WebApp\bin\Debug\net9.0\Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore.dll
+C:\Users\Elvin\JobBoard\JobBoard.WebApp\bin\Debug\net9.0\RabbitMQ.Client.dll
+C:\Users\Elvin\JobBoard\JobBoard.WebApp\bin\Debug\net9.0\Serilog.dll
+C:\Users\Elvin\JobBoard\JobBoard.WebApp\bin\Debug\net9.0\Serilog.AspNetCore.dll
+C:\Users\Elvin\JobBoard\JobBoard.WebApp\bin\Debug\net9.0\Serilog.Extensions.Hosting.dll
+C:\Users\Elvin\JobBoard\JobBoard.WebApp\bin\Debug\net9.0\Serilog.Extensions.Logging.dll
+C:\Users\Elvin\JobBoard\JobBoard.WebApp\bin\Debug\net9.0\Serilog.Formatting.Compact.dll
+C:\Users\Elvin\JobBoard\JobBoard.WebApp\bin\Debug\net9.0\Serilog.Settings.Configuration.dll
+C:\Users\Elvin\JobBoard\JobBoard.WebApp\bin\Debug\net9.0\Serilog.Sinks.Console.dll
+C:\Users\Elvin\JobBoard\JobBoard.WebApp\bin\Debug\net9.0\Serilog.Sinks.Debug.dll
+C:\Users\Elvin\JobBoard\JobBoard.WebApp\bin\Debug\net9.0\Serilog.Sinks.File.dll

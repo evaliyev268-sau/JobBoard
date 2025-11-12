@@ -2,8 +2,20 @@ using JobBoard.Application;
 using JobBoard.Infrastructure;
 using JobBoard.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
+using HealthChecks.RabbitMQ;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using JobBoard.Infrastructure.Messaging;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+Log.Logger=new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
+
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -11,6 +23,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+
+builder.Services.AddHealthChecks()
+    .AddDbContextCheck<AppDbContext>("database")
+  .AddCheck<RabbitMqHealthCheck>("rabbitmq_config");
 
 var app=builder.Build();
 
@@ -28,6 +44,7 @@ using(var scope=app.Services.CreateScope())
             new JobBoard.Core.Models.Job{Title="Project Manager",Description="Oversee project planning and execution."}
         });
         await db.SaveChangesAsync();
+        Log.Information("Seeded initial job data.");
     }
 }
 if(app.Environment.IsDevelopment())
@@ -42,4 +59,17 @@ app.UseHttpsRedirection();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 app.MapControllers();
+
+app.MapHealthChecks("/health");
+
+
+app.Lifetime.ApplicationStarted.Register(()=>
+{
+    Log.Information("App started in {Environment}", app.Environment.EnvironmentName);
+});
+
+
+
 app.Run();
+
+Log.CloseAndFlush();
