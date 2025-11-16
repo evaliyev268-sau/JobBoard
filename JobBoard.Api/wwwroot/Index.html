@@ -4,13 +4,86 @@
     <meta charset="utf-8" />
     <title>JobBoard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
- 
+    <style>
+        body {
+            font-family: system-ui, Arial, sans-serif;
+            margin: 24px;
+        }
 
-   
+        h1 {
+            margin: 0 0 12px;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .col {
+            flex: 1 1 340px;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        label {
+            display: block;
+            margin: 8px 0 4px;
+            font-size: 14px;
+        }
+
+        input, textarea, button {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 8px;
+            font-size: 14px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        button {
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        ul {
+            padding-left: 18px;
+        }
+
+        .muted {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .ok {
+            color: #0a6;
+        }
+
+        .err {
+            color: #c00;
+            white-space: pre-wrap;
+        }
+
+        .job-item {
+            cursor: pointer;
+        }
+
+            .job-item.active {
+                font-weight: bold;
+            }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@microsoft/signalr@8.0.7/dist/browser/signalr.min.js"></script>
 </head>
 <body>
     <h1>JobBoard</h1>
-    <div class="muted">Bu sayfadan API’yi doğrudan test edebilirsin. Swagger’a gerek yok.</div>
+    <div class="muted">Canlı güncellemeler aktif (SignalR).</div>
 
     <div class="row" style="margin-top:12px;">
         <div class="col">
@@ -56,126 +129,144 @@
 
     <div id="error" class="err" style="margin-top:12px;"></div>
 
-    <script>
-        const api = ""; // Aynı origin
-        let selectedJobId = null;
+    <script>const api = "";
+    let selectedJobId = null;
 
-        function showErr(msg) { document.getElementById("error").textContent = msg; }
-        function clearErr() { document.getElementById("error").textContent = ""; }
+    function showErr(msg){ document.getElementById("error").textContent = msg; }
+    function clearErr(){ document.getElementById("error").textContent = ""; }
 
-        async function createJob() {
-            clearErr();
-            document.getElementById("createJobMsg").textContent = "";
-            const title = document.getElementById("title").value.trim();
-            const description = document.getElementById("desc").value.trim();
-            if (!title || !description) { showErr("Başlık ve açıklama zorunlu."); return; }
-            try {
-                const res = await fetch(api + "/api/Jobs", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ title, description })
-                });
-                if (!res.ok) { showErr("Job oluşturulamadı: " + res.status + " " + res.statusText); return; }
-                document.getElementById("createJobMsg").innerHTML = "<span class='ok'>Oluşturuldu.</span>";
-                document.getElementById("title").value = "";
-                document.getElementById("desc").value = "";
-                await loadJobs();
-            } catch (e) { showErr(e.message); }
+    async function createJob(){
+      clearErr();
+      const title = document.getElementById("title").value.trim();
+      const description = document.getElementById("desc").value.trim();
+      if(!title || !description){ showErr("Başlık ve açıklama zorunlu."); return; }
+      try{
+        const res = await fetch(api + "/api/Jobs", {
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({title, description})
+        });
+        if(!res.ok){ showErr("Job oluşturulamadı: " + res.status); return; }
+        document.getElementById("createJobMsg").innerHTML = "<span class='ok'>Oluşturuldu.</span>";
+        document.getElementById("title").value="";
+        document.getElementById("desc").value="";
+        // Listeyi manuel yenilemeye gerek yok; JobCreated event gelecek
+      }catch(e){ showErr(e.message); }
+    }
+
+    async function loadJobs(){
+      clearErr();
+      const ul = document.getElementById("jobs");
+      const info = document.getElementById("jobsInfo");
+      ul.innerHTML = "Yükleniyor...";
+      info.textContent = "";
+      try{
+        const res = await fetch(api + "/api/Jobs");
+        if(!res.ok){ ul.innerHTML=""; showErr("Jobs alınamadı: " + res.status); return; }
+        const data = await res.json();
+        if(!Array.isArray(data) || data.length===0){ ul.innerHTML=""; info.textContent="Kayıt yok."; return; }
+        ul.innerHTML="";
+        for(const j of data){
+          const li = document.createElement("li");
+          li.className="job-item"+(selectedJobId===j.id ? " active":"");
+          li.textContent = "#" + j.id + " — " + j.title;
+            li.onclick = () => selectJob(j.id);
+          ul.appendChild(li);
         }
+      }catch(e){ ul.innerHTML=""; showErr(e.message); }
+    }
 
-        async function loadJobs() {
-            clearErr();
-            const ul = document.getElementById("jobs");
-            const info = document.getElementById("jobsInfo");
-            ul.innerHTML = "Yükleniyor...";
-            info.textContent = "";
-            try {
-                const res = await fetch(api + "/api/Jobs");
-                if (!res.ok) { ul.innerHTML = ""; showErr("Jobs alınamadı: " + res.status + " " + res.statusText); return; }
-                const data = await res.json();
-                if (!Array.isArray(data) || data.length === 0) {
-                    ul.innerHTML = "";
-                    info.textContent = "Kayıt yok.";
-                    return;
-                }
-                ul.innerHTML = "";
-                for (const j of data) {
-                    const li = document.createElement("li");
-                    li.className = "job-item" + (selectedJobId === j.id ? " active" : "");
-                    li.textContent = "#" + j.id + " — " + j.title;
-                    li.onclick = () => selectJob(j.id);
-                    ul.appendChild(li);
-                }
-            } catch (e) { ul.innerHTML = ""; showErr(e.message); }
+    function selectJob(id){
+      selectedJobId = id;
+      document.getElementById("jobId").value = id;
+      document.getElementById("appsInfo").textContent = "Job #"+id+" başvuruları";
+      document.querySelectorAll(".job-item").forEach(el=>{
+        el.classList.toggle("active", el.textContent.startsWith("#"+id));
+      });
+      loadApplications();
+    }
+
+    async function apply(){
+      clearErr();
+      const id = parseInt(document.getElementById("jobId").value,10);
+      const applicantName = document.getElementById("appName").value.trim();
+      const applicantEmail = document.getElementById("appEmail").value.trim();
+      if(!id || !applicantName || !applicantEmail){ showErr("Tüm alanlar zorunlu."); return; }
+      try{
+        const res = await fetch(api + `/api/Jobs/${id}/apply`,{
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({ applicantName, applicantEmail })
+        });
+        if(!res.ok){ showErr("Başvuru başarısız: " + res.status); return; }
+        document.getElementById("applyMsg").innerHTML = "<span class='ok'>Başvuru alındı.</span>";
+        document.getElementById("appName").value="";
+        document.getElementById("appEmail").value="";
+        // Realtime event gelecek, seçili job ise liste yenilenecek
+      }catch(e){ showErr(e.message); }
+    }
+
+    async function loadApplications(){
+      clearErr();
+      let id = selectedJobId || parseInt(document.getElementById("jobId").value,10);
+      if(!id){
+        document.getElementById("appsInfo").textContent = "İş seçiniz.";
+        document.getElementById("applications").innerHTML = "";
+        return;
+      }
+      document.getElementById("appsInfo").textContent = "Job #"+id+" başvuruları";
+      const ul = document.getElementById("applications");
+      ul.innerHTML="Yükleniyor...";
+      try{
+        const res = await fetch(api + `/api/Jobs/${id}/applications`);
+        if(!res.ok){
+          ul.innerHTML="";
+          if(res.status===404){
+            document.getElementById("appsInfo").textContent="Başvurular endpoint'i yok.";
+          } else {
+            showErr("Başvurular alınamadı: " + res.status);
+          }
+          return;
         }
-
-        function selectJob(id) {
-            selectedJobId = id;
-            document.getElementById("jobId").value = id;
-            document.getElementById("appsInfo").textContent = "Job #" + id + " başvuruları";
-            // aktif vurgusunu güncelle
-            document.querySelectorAll(".job-item").forEach(el => {
-                el.classList.toggle("active", el.textContent.startsWith("#" + id));
-            });
-            loadApplications();
+        const data = await res.json();
+        if(!Array.isArray(data) || data.length===0){
+          ul.innerHTML="<span class='muted'>Başvuru yok.</span>";
+          return;
         }
-
-        async function apply() {
-            clearErr();
-            document.getElementById("applyMsg").textContent = "";
-            const id = parseInt(document.getElementById("jobId").value, 10);
-            const applicantName = document.getElementById("appName").value.trim();
-            const applicantEmail = document.getElementById("appEmail").value.trim();
-            if (!id || !applicantName || !applicantEmail) { showErr("Tüm alanlar zorunlu."); return; }
-            try {
-                const res = await fetch(api + `/api/Jobs/${id}/apply`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ applicantName, applicantEmail })
-                });
-                if (!res.ok) { showErr("Başvuru başarısız: " + res.status + " " + res.statusText); return; }
-                document.getElementById("applyMsg").innerHTML = "<span class='ok'>Başvuru alındı.</span>";
-                document.getElementById("appName").value = "";
-                document.getElementById("appEmail").value = "";
-                if (selectedJobId === id) { loadApplications(); }
-            } catch (e) { showErr(e.message); }
+        ul.innerHTML="";
+        for(const a of data){
+          const li = document.createElement("li");
+          li.innerHTML = `#${a.id} — ${a.applicantName} <span class="muted">(${a.applicantEmail})</span>`;
+          ul.appendChild(li);
         }
+      }catch(e){ ul.innerHTML=""; showErr(e.message); }
+    }
 
-        async function loadApplications() {
-            clearErr();
-            if (!selectedJobId) {
-                document.getElementById("appsInfo").textContent = "İş seçiniz.";
-                document.getElementById("applications").innerHTML = "";
-                return;
-            }
-            const ul = document.getElementById("applications");
-            ul.innerHTML = "Yükleniyor...";
-            try {
-                const res = await fetch(api + `/api/Jobs/${selectedJobId}/applications`);
-                if (!res.ok) {
-                    ul.innerHTML = "";
-                    if (res.status === 404) {
-                        document.getElementById("appsInfo").textContent = "Başvurular endpoint'i henüz eklenmemiş olabilir.";
-                    } else {
-                        showErr("Başvurular alınamadı: " + res.status + " " + res.statusText);
-                    }
-                    return;
-                }
-                const data = await res.json();
-                if (!Array.isArray(data) || data.length === 0) {
-                    ul.innerHTML = "<span class='muted'>Başvuru yok.</span>";
-                    return;
-                }
-                ul.innerHTML = "";
-                for (const a of data) {
-                    const li = document.createElement("li");
-                    li.innerHTML = `#${a.id} — ${a.applicantName} <span class="muted">(${a.applicantEmail})</span>`;
-                    ul.appendChild(li);
-                }
-            } catch (e) { ul.innerHTML = ""; showErr(e.message); }
-        }
+    // SignalR bağlantısı
+    const connection = new signalR.HubConnectionBuilder()
+      .withUrl("/hubs/jobs")
+      .withAutomaticReconnect()
+      .build();
 
-        window.addEventListener("load", loadJobs);
-    </script>
+    connection.on("JobCreated", job => {
+      // Job listeyi tekrar çekiyoruz (append de yapabilirdik)
+      loadJobs();
+    });
+
+    connection.on("JobApplicationCreated", app => {
+      if(selectedJobId && app && app.jobId === selectedJobId){
+        loadApplications();
+      }
+    });
+
+    async function startHub(){
+      try { await connection.start(); }
+      catch(e){ setTimeout(startHub,1500); }
+    }
+
+    window.addEventListener("load", ()=> {
+      loadJobs();
+      startHub();
+    });</script>
 </body>
 </html>

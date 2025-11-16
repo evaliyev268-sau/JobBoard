@@ -6,6 +6,8 @@ using Serilog;
 using HealthChecks.RabbitMQ;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using JobBoard.Infrastructure.Messaging;
+using JobBoard.Application.Abstractions;
+using JobBoard.Api.Realtime;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +25,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddSignalR();
+builder.Services.AddSingleton<IRealtimeNotifier, SignalRRealtimeNotifier>();
 
 builder.Services.AddHealthChecks()
     .AddDbContextCheck<AppDbContext>("database")
@@ -59,6 +63,8 @@ app.UseHttpsRedirection();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 app.MapControllers();
+
+app.MapHub<JobsHub>("/hubs/jobs");
 
 app.MapHealthChecks("/health");
 

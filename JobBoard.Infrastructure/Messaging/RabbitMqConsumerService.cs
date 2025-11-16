@@ -88,12 +88,6 @@ namespace JobBoard.Infrastructure.Messaging
             await base.StartAsync(ct);
         }
 
-
-
-
-
-
-
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             //No channel
@@ -152,6 +146,7 @@ namespace JobBoard.Infrastructure.Messaging
             return Task.CompletedTask;
 
         }
+        
         public override void Dispose()
         {
             (_channel as IDisposable)?.Dispose();

@@ -1,0 +1,215 @@
+2025-11-16 12:20:31.621 +03:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-11-16 12:20:31.744 +03:00 [INF] Executed DbCommand (24ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "name" = '__EFMigrationsLock' AND "type" = 'table';
+2025-11-16 12:20:31.761 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT OR IGNORE INTO "__EFMigrationsLock"("Id", "Timestamp") VALUES(1, '2025-11-16 09:20:31.7559888+00:00');
+SELECT changes();
+2025-11-16 12:20:31.853 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+    "MigrationId" TEXT NOT NULL CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY,
+    "ProductVersion" TEXT NOT NULL
+);
+2025-11-16 12:20:31.866 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "name" = '__EFMigrationsHistory' AND "type" = 'table';
+2025-11-16 12:20:31.873 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-11-16 12:20:31.886 +03:00 [INF] No migrations were applied. The database is already up to date.
+2025-11-16 12:20:31.890 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DELETE FROM "__EFMigrationsLock";
+2025-11-16 12:20:32.257 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Jobs" AS "j")
+2025-11-16 12:20:34.949 +03:00 [INF] RabbitMqConsumerService started and connected to RabbitMQ at rabbit.lmq.cloudamqp.com:5671
+2025-11-16 12:20:35.081 +03:00 [INF] Now listening on: http://localhost:5199
+2025-11-16 12:20:35.084 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-16 12:20:35.086 +03:00 [INF] Hosting environment: Development
+2025-11-16 12:20:35.091 +03:00 [INF] Content root path: C:\Users\Elvin\JobBoard\JobBoard.Api
+2025-11-16 12:20:35.095 +03:00 [INF] App started in Development
+2025-11-16 12:26:23.642 +03:00 [WRN] Failed to determine the https port for redirect.
+2025-11-16 12:26:27.365 +03:00 [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."Description", "j"."PostedAt", "j"."Title"
+FROM "Jobs" AS "j"
+ORDER BY "j"."PostedAt" DESC
+2025-11-16 12:26:46.782 +03:00 [INF] Executed DbCommand (15ms) [Parameters=[@p0='?' (Size = 21), @p1='?' (DbType = DateTime), @p2='?' (Size = 9)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Jobs" ("Description", "PostedAt", "Title")
+VALUES (@p0, @p1, @p2)
+RETURNING "Id";
+2025-11-16 12:26:48.858 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."Description", "j"."PostedAt", "j"."Title"
+FROM "Jobs" AS "j"
+ORDER BY "j"."PostedAt" DESC
+2025-11-16 12:27:05.202 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@p0='?' (Size = 4), @p1='?' (DbType = DateTime), @p2='?' (Size = 3)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Jobs" ("Description", "PostedAt", "Title")
+VALUES (@p0, @p1, @p2)
+RETURNING "Id";
+2025-11-16 12:27:12.121 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."Description", "j"."PostedAt", "j"."Title"
+FROM "Jobs" AS "j"
+ORDER BY "j"."PostedAt" DESC
+2025-11-16 12:27:13.507 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."Description", "j"."PostedAt", "j"."Title"
+FROM "Jobs" AS "j"
+ORDER BY "j"."PostedAt" DESC
+2025-11-16 12:27:13.677 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."Description", "j"."PostedAt", "j"."Title"
+FROM "Jobs" AS "j"
+ORDER BY "j"."PostedAt" DESC
+2025-11-16 12:27:13.845 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."Description", "j"."PostedAt", "j"."Title"
+FROM "Jobs" AS "j"
+ORDER BY "j"."PostedAt" DESC
+2025-11-16 12:27:14.729 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."Description", "j"."PostedAt", "j"."Title"
+FROM "Jobs" AS "j"
+ORDER BY "j"."PostedAt" DESC
+2025-11-16 12:28:35.742 +03:00 [INF] Application is shutting down...
+2025-11-16 12:29:34.295 +03:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-11-16 12:29:34.435 +03:00 [INF] Executed DbCommand (47ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "name" = '__EFMigrationsLock' AND "type" = 'table';
+2025-11-16 12:29:34.460 +03:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT OR IGNORE INTO "__EFMigrationsLock"("Id", "Timestamp") VALUES(1, '2025-11-16 09:29:34.4546962+00:00');
+SELECT changes();
+2025-11-16 12:29:34.538 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+    "MigrationId" TEXT NOT NULL CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY,
+    "ProductVersion" TEXT NOT NULL
+);
+2025-11-16 12:29:34.550 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "name" = '__EFMigrationsHistory' AND "type" = 'table';
+2025-11-16 12:29:34.559 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-11-16 12:29:34.570 +03:00 [INF] No migrations were applied. The database is already up to date.
+2025-11-16 12:29:34.574 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DELETE FROM "__EFMigrationsLock";
+2025-11-16 12:29:34.839 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Jobs" AS "j")
+2025-11-16 12:29:37.364 +03:00 [INF] RabbitMqConsumerService started and connected to RabbitMQ at rabbit.lmq.cloudamqp.com:5671
+2025-11-16 12:29:37.462 +03:00 [INF] Now listening on: http://localhost:5199
+2025-11-16 12:29:37.464 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-16 12:29:37.465 +03:00 [INF] Hosting environment: Development
+2025-11-16 12:29:37.467 +03:00 [INF] Content root path: C:\Users\Elvin\JobBoard\JobBoard.Api
+2025-11-16 12:29:37.470 +03:00 [INF] App started in Development
+2025-11-16 12:29:46.198 +03:00 [WRN] Failed to determine the https port for redirect.
+2025-11-16 12:29:48.492 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."Description", "j"."PostedAt", "j"."Title"
+FROM "Jobs" AS "j"
+ORDER BY "j"."PostedAt" DESC
+2025-11-16 12:30:08.180 +03:00 [INF] Executed DbCommand (7ms) [Parameters=[@p0='?' (Size = 29), @p1='?' (DbType = DateTime), @p2='?' (Size = 8)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Jobs" ("Description", "PostedAt", "Title")
+VALUES (@p0, @p1, @p2)
+RETURNING "Id";
+2025-11-16 12:30:11.611 +03:00 [ERR] Failed executing DbCommand (7ms) [Parameters=[@p0='?' (Size = 23), @p1='?' (Size = 11), @p2='?' (DbType = DateTime), @p3='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "JobApplications" ("ApplicantEmail", "ApplicantName", "AppliedAt", "JobId")
+VALUES (@p0, @p1, @p2, @p3)
+RETURNING "Id";
+2025-11-16 12:30:11.652 +03:00 [ERR] An exception occurred in the database while saving changes for context type 'JobBoard.Infrastructure.Data.AppDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.Sqlite.SqliteException (0x80004005): SQLite Error 19: 'FOREIGN KEY constraint failed'.
+   at Microsoft.Data.Sqlite.SqliteException.ThrowExceptionForRC(Int32 rc, sqlite3 db)
+   at Microsoft.Data.Sqlite.SqliteDataReader.NextResult()
+   at Microsoft.Data.Sqlite.SqliteCommand.ExecuteReader(CommandBehavior behavior)
+   at Microsoft.Data.Sqlite.SqliteCommand.ExecuteReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.Data.Sqlite.SqliteCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.Sqlite.SqliteException (0x80004005): SQLite Error 19: 'FOREIGN KEY constraint failed'.
+   at Microsoft.Data.Sqlite.SqliteException.ThrowExceptionForRC(Int32 rc, sqlite3 db)
+   at Microsoft.Data.Sqlite.SqliteDataReader.NextResult()
+   at Microsoft.Data.Sqlite.SqliteCommand.ExecuteReader(CommandBehavior behavior)
+   at Microsoft.Data.Sqlite.SqliteCommand.ExecuteReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.Data.Sqlite.SqliteCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2025-11-16 12:30:11.682 +03:00 [ERR] An unhandled exception has occurred while executing the request.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.Sqlite.SqliteException (0x80004005): SQLite Error 19: 'FOREIGN KEY constraint failed'.
+   at Microsoft.Data.Sqlite.SqliteException.ThrowExceptionForRC(Int32 rc, sqlite3 db)
+   at Microsoft.Data.Sqlite.SqliteDataReader.NextResult()
+   at Microsoft.Data.Sqlite.SqliteCommand.ExecuteReader(CommandBehavior behavior)
+   at Microsoft.Data.Sqlite.SqliteCommand.ExecuteReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.Data.Sqlite.SqliteCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabase.SaveChangesAsync(IList`1 entries, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at JobBoard.Infrastructure.Repositories.EfJobRepository.AddApplicationAsync(JobApplication application, CancellationToken ct) in C:\Users\Elvin\JobBoard\JobBoard.Infrastructure\Repositories\EfJobRepository.cs:line 25
+   at JobBoard.Application.Services.JobService.ApplyAsync(Int32 jobId, ApplyRequest request, CancellationToken ct) in C:\Users\Elvin\JobBoard\JobBoard.Application\Services\JobService.cs:line 36
+   at JobBoard.Api.Controllers.JobsController.Apply(Int32 id, ApplyRequest req, CancellationToken ct) in C:\Users\Elvin\JobBoard\JobBoard.Api\Controllers\JobsController.cs:line 38
+   at lambda_method96(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2025-11-16 12:30:14.148 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 12:30:14.868 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 12:30:15.502 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."Description", "j"."PostedAt", "j"."Title"
+FROM "Jobs" AS "j"
+ORDER BY "j"."PostedAt" DESC
+2025-11-16 12:30:16.216 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 12:30:16.762 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 12:30:22.165 +03:00 [INF] Application is shutting down...

@@ -14,10 +14,14 @@ namespace JobBoard.Application.Services
     {
         private readonly IJobRepository _repo;
         private readonly IRabbitMqPublisher _publisher;
-        public JobService(IJobRepository repo,IRabbitMqPublisher publisher)
+        private readonly IRealtimeNotifier _notifier;
+
+
+        public JobService(IJobRepository repo,IRabbitMqPublisher publisher, IRealtimeNotifier notifier)
         {
             _repo = repo;
             _publisher = publisher;
+            _notifier = notifier;
         }
         public async Task<int> ApplyAsync(int jobId, ApplyRequest request, CancellationToken ct = default)
         {
@@ -41,6 +45,18 @@ namespace JobBoard.Application.Services
             };
 
             await _publisher.PublishAsync(evt,ct);
+
+            await _notifier.NotifyApplicationCreated(new
+            {
+
+                id = app.Id,
+                JobId = jobId,
+                ApplicationId = app.Id,
+                ApplicantName = app.ApplicantName,
+                ApplicantEmail = app.ApplicantEmail,
+                AppliedAt = app.AppliedAt
+            });
+
             return app.Id;
 
         }
