@@ -17,7 +17,7 @@ namespace JobBoard.Api.Realtime
 
         public Task NotifyApplicationCreated(object payload, CancellationToken ct = default)
         {
-            return _hub.Clients.All.SendAsync("ApplicationCreated", payload, ct);
+            return _hub.Clients.All.SendAsync("JobApplicationCreated", payload, ct);
         }
 
 
@@ -25,7 +25,7 @@ namespace JobBoard.Api.Realtime
 
         public Task NotifyJobCreated(JobDto job, CancellationToken ct = default)
         {
-            return _hub.Clients.All.SendAsync("JobCreated", job, ct);
+            return _hub.Clients.All.SendAsync("JobCreated", new {id=job.Id,title=job.Title,description=job.Description}, ct);
 
         }
 

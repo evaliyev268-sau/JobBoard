@@ -50,12 +50,12 @@ namespace JobBoard.Application.Services
             {
 
                 id = app.Id,
-                JobId = jobId,
-                ApplicationId = app.Id,
-                ApplicantName = app.ApplicantName,
-                ApplicantEmail = app.ApplicantEmail,
-                AppliedAt = app.AppliedAt
-            });
+                jobId = jobId,
+                applicationId = app.Id,
+                applicantName = app.ApplicantName,
+                applicantEmail = app.ApplicantEmail,
+                appliedAt = app.AppliedAt
+            },ct);
 
             return app.Id;
 
@@ -65,7 +65,11 @@ namespace JobBoard.Application.Services
         {
             var entity = new Job {Title=request.Title,Description=request.Description };
             entity = await _repo.AddAsync(entity, ct);
-            return new JobDto(entity.Id, entity.Title, entity.Description);
+           var dto=new JobDto(entity.Id, entity.Title, entity.Description);
+
+            await _notifier.NotifyJobCreated(dto, ct);
+
+            return dto;
         }
 
         public async Task<List<JobDto>> GetAllAsync(CancellationToken ct = default)

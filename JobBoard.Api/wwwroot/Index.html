@@ -5,30 +5,90 @@
     <title>JobBoard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
+        :root {
+            --border: #e5e7eb;
+            --ok: #0a7c4a;
+            --err: #c62828;
+            --muted: #666;
+            --bg: #fafafa;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: system-ui, Arial, sans-serif;
-            margin: 24px;
+            margin: 0;
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            background: var(--bg);
         }
 
-        h1 {
-            margin: 0 0 12px;
-        }
-
-        .row {
+        header {
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            padding: 14px 18px;
             display: flex;
+            align-items: center;
+            gap: 12px;
             flex-wrap: wrap;
-            gap: 16px;
         }
 
-        .col {
-            flex: 1 1 340px;
+            header h1 {
+                margin: 0;
+                font-size: 20px;
+            }
+
+            header .status {
+                margin-left: auto;
+                font-size: 12px;
+                color: #222;
+                display: flex;
+                gap: 10px;
+                align-items: center;
+            }
+
+            header .dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                display: inline-block;
+            }
+
+        .dot.ok {
+            background: #16a34a;
+        }
+
+        .dot.warn {
+            background: #f59e0b;
+        }
+
+        .dot.err {
+            background: #ef4444;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 18px auto;
+            padding: 0 16px 40px;
+        }
+
+        .grid {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(320px,1fr));
         }
 
         .card {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 16px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px;
         }
+
+            .card h3 {
+                margin: 0 0 10px;
+                font-size: 16px;
+            }
 
         label {
             display: block;
@@ -38,9 +98,11 @@
 
         input, textarea, button {
             width: 100%;
-            box-sizing: border-box;
-            padding: 8px;
+            padding: 9px 10px;
             font-size: 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: #fff;
         }
 
         textarea {
@@ -50,24 +112,34 @@
 
         button {
             cursor: pointer;
-            margin-top: 8px;
+            border-color: #c7ccd1;
+            background: #0d6efd;
+            color: #fff;
+            border: 1px solid #0d6efd;
         }
 
+            button.secondary {
+                background: #eef2ff;
+                color: #1e3a8a;
+                border: 1px solid #c7d2fe;
+            }
+
         ul {
+            margin: 8px 0 0;
             padding-left: 18px;
         }
 
         .muted {
-            color: #666;
-            font-size: 13px;
+            color: var(--muted);
+            font-size: 12.5px;
         }
 
         .ok {
-            color: #0a6;
+            color: var(--ok);
         }
 
         .err {
-            color: #c00;
+            color: var(--err);
             white-space: pre-wrap;
         }
 
@@ -76,197 +148,286 @@
         }
 
             .job-item.active {
-                font-weight: bold;
+                font-weight: 600;
             }
+
+        .row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .toast {
+            position: fixed;
+            right: 14px;
+            top: 14px;
+            background: #111;
+            color: #fff;
+            padding: 8px 10px;
+            border-radius: 8px;
+            font-size: 12.5px;
+            opacity: .95;
+            z-index: 10;
+        }
+
+        .hidden {
+            display: none !important;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@microsoft/signalr@8.0.7/dist/browser/signalr.min.js"></script>
 </head>
 <body>
-    <h1>JobBoard</h1>
-    <div class="muted">Canlı güncellemeler aktif (SignalR).</div>
+    <header>
+        <h1>JobBoard</h1>
+        <div class="status">
+            <span id="connDot" class="dot err"></span>
+            <span id="connText">Bağlı değil</span>
+        </div>
+    </header>
 
-    <div class="row" style="margin-top:12px;">
-        <div class="col">
+    <main>
+        <div id="topInfo" class="muted" style="margin:6px 0 14px;">Bu sayfadan API’yi doğrudan kullanın. Canlı güncellemeler SignalR ile gelir.</div>
+
+        <div class="grid">
+            <div class="card">
+                <h3>İş İlanları</h3>
+                <div class="row">
+                    <button class="secondary" onclick="loadJobs()">Yenile</button>
+                </div>
+                <ul id="jobs" class="muted"></ul>
+                <div id="jobsInfo" class="muted"></div>
+            </div>
+
             <div class="card">
                 <h3>Yeni İş İlanı</h3>
                 <label for="title">Başlık</label>
                 <input id="title" placeholder="Örn: Junior .NET Developer" />
                 <label for="desc">Açıklama</label>
                 <textarea id="desc" placeholder="Kısa açıklama"></textarea>
-                <button onclick="createJob()">Oluştur</button>
+                <div class="row">
+                    <button onclick="createJob()">Oluştur</button>
+                    <button class="secondary" onclick="clearCreateForm()">Temizle</button>
+                </div>
                 <div id="createJobMsg" class="muted"></div>
             </div>
-        </div>
 
-        <div class="col">
             <div class="card">
-                <h3>İş İlanları</h3>
-                <button onclick="loadJobs()">Yenile</button>
-                <ul id="jobs" class="muted" style="margin-top:8px;"></ul>
-                <div id="jobsInfo" class="muted"></div>
+                <h3>Başvuru Yap</h3>
+                <label for="jobId">Job Id</label>
+                <input id="jobId" type="number" placeholder="Örn: 1" />
+                <label for="appName">Ad Soyad</label>
+                <input id="appName" placeholder="Örn: Ali Veli" />
+                <label for="appEmail">E‑posta</label>
+                <input id="appEmail" placeholder="ali@example.com" />
+                <div class="row">
+                    <button onclick="apply()">Başvur</button>
+                    <button class="secondary" onclick="clearApplyForm()">Temizle</button>
+                </div>
+                <div id="applyMsg" class="muted"></div>
+            </div>
+
+            <div class="card">
+                <h3>Başvurular (Seçili İş)</h3>
+                <div class="row">
+                    <button class="secondary" onclick="loadApplications()">Yenile</button>
+                </div>
+                <div id="appsInfo" class="muted" style="margin-top:8px;">Henüz iş seçilmedi.</div>
+                <ul id="applications" class="muted" style="margin-top:8px;"></ul>
             </div>
         </div>
-    </div>
 
-    <div class="card" style="margin-top:16px;">
-        <h3>Seçili İlan’a Başvur</h3>
-        <label for="jobId">Job Id</label>
-        <input id="jobId" type="number" placeholder="Örn: 1" />
-        <label for="appName">Ad Soyad</label>
-        <input id="appName" placeholder="Örn: Ali Veli" />
-        <label for="appEmail">E‑posta</label>
-        <input id="appEmail" placeholder="ali@example.com" />
-        <button onclick="apply()">Başvur</button>
-        <div id="applyMsg" class="muted"></div>
-    </div>
+        <div id="error" class="err" style="margin-top:12px;"></div>
+    </main>
 
-    <div class="card" style="margin-top:16px;">
-        <h3>Başvurular (Seçili İş)</h3>
-        <button onclick="loadApplications()">Yenile</button>
-        <div id="appsInfo" class="muted" style="margin-top:8px;">Henüz iş seçilmedi.</div>
-        <ul id="applications" class="muted" style="margin-top:8px;"></ul>
-    </div>
+    <script>
+        const api = ""; // aynı origin
+        let selectedJobId = null;
 
-    <div id="error" class="err" style="margin-top:12px;"></div>
+        // --------------- Helpers ---------------
+        function $(id) { return document.getElementById(id); }
+        function showErr(msg) { $("error").textContent = msg; }
+        function clearErr() { $("error").textContent = ""; }
+        function toast(msg, kind = "info") {
+            const t = document.createElement("div");
+            t.className = "toast";
+            t.textContent = msg;
+            if (kind === "ok") t.style.background = "#0a7c4a";
+            if (kind === "err") t.style.background = "#c62828";
+            document.body.appendChild(t);
+            setTimeout(() => t.remove(), 2500);
+        }
+        function escapeHtml(str) {
+            return String(str ?? "").replace(/[&<>"']/g, s => ({
+                "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;"
+            })[s]);
+        }
 
-    <script>const api = "";
-    let selectedJobId = null;
+        // --------------- Jobs ---------------
+        async function loadJobs() {
+            clearErr();
+            const ul = $("jobs");
+            const info = $("jobsInfo");
+            ul.innerHTML = "Yükleniyor...";
+            info.textContent = "";
+            try {
+                const res = await fetch(api + "/api/Jobs");
+                if (!res.ok) { ul.innerHTML = ""; showErr("Jobs alınamadı: " + res.status + " " + res.statusText); return; }
+                const data = await res.json();
+                ul.innerHTML = "";
+                if (!Array.isArray(data) || data.length === 0) { info.textContent = "Kayıt yok."; return; }
+                data.forEach(j => {
+                    const li = document.createElement("li");
+                    li.className = "job-item" + (selectedJobId === j.id ? " active" : "");
+                    li.textContent = "#" + j.id + " — " + j.title;
+                    li.onclick = () => selectJob(j.id);
+                    ul.appendChild(li);
+                });
+            } catch (e) { ul.innerHTML = ""; showErr(e.message); }
+        }
 
-    function showErr(msg){ document.getElementById("error").textContent = msg; }
-    function clearErr(){ document.getElementById("error").textContent = ""; }
+        async function createJob() {
+            clearErr();
+            $("createJobMsg").textContent = "";
+            const title = $("title").value.trim();
+            const description = $("desc").value.trim();
+            if (!title || !description) { showErr("Başlık ve açıklama zorunlu."); return; }
+            try {
+                const res = await fetch(api + "/api/Jobs", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ title, description })
+                });
+                if (!res.ok) { showErr("Job oluşturulamadı: " + res.status + " " + res.statusText); return; }
+                $("createJobMsg").innerHTML = "<span class='ok'>Oluşturuldu.</span>";
+                $("title").value = "";
+                $("desc").value = "";
+                // JobCreated olayı gelmezse fallback:
+                setTimeout(() => { /* en geç */ loadJobs(); }, 800);
+            } catch (e) { showErr(e.message); }
+        }
+        function clearCreateForm() { $("title").value = ""; $("desc").value = ""; $("createJobMsg").textContent = ""; }
 
-    async function createJob(){
-      clearErr();
-      const title = document.getElementById("title").value.trim();
-      const description = document.getElementById("desc").value.trim();
-      if(!title || !description){ showErr("Başlık ve açıklama zorunlu."); return; }
-      try{
-        const res = await fetch(api + "/api/Jobs", {
-          method:"POST",
-          headers:{"Content-Type":"application/json"},
-          body:JSON.stringify({title, description})
+        function selectJob(id) {
+            selectedJobId = id;
+            $("jobId").value = id;
+            $("appsInfo").textContent = "Job #" + id + " başvuruları";
+            document.querySelectorAll(".job-item").forEach(el => {
+                el.classList.toggle("active", el.textContent.startsWith("#" + id));
+            });
+            loadApplications();
+        }
+
+        // --------------- Applications ---------------
+        async function apply() {
+            clearErr();
+            $("applyMsg").textContent = "";
+            const id = parseInt($("jobId").value, 10);
+            const applicantName = $("appName").value.trim();
+            const applicantEmail = $("appEmail").value.trim();
+            if (!id || !applicantName || !applicantEmail) { showErr("Tüm alanlar zorunlu."); return; }
+            try {
+                const res = await fetch(api + `/api/Jobs/${id}/apply`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ applicantName, applicantEmail })
+                });
+                if (!res.ok) { showErr("Başvuru başarısız: " + res.status + " " + res.statusText); return; }
+                $("applyMsg").innerHTML = "<span class='ok'>Başvuru alındı.</span>";
+                $("appName").value = "";
+                $("appEmail").value = "";
+                // Event gelmezse en geç fallback:
+                if (selectedJobId === id) setTimeout(loadApplications, 800);
+            } catch (e) { showErr(e.message); }
+        }
+        function clearApplyForm() { $("appName").value = ""; $("appEmail").value = ""; $("applyMsg").textContent = ""; }
+
+        async function loadApplications() {
+            clearErr();
+            let id = selectedJobId || parseInt($("jobId").value, 10);
+            if (!id) { $("appsInfo").textContent = "İş seçiniz."; $("applications").innerHTML = ""; return; }
+            $("appsInfo").textContent = "Job #" + id + " başvuruları";
+            const ul = $("applications");
+            ul.innerHTML = "Yükleniyor...";
+            try {
+                const res = await fetch(api + `/api/Jobs/${id}/applications`);
+                if (!res.ok) {
+                    ul.innerHTML = "";
+                    if (res.status === 404) $("appsInfo").textContent = "Başvurular endpoint'i henüz eklenmemiş olabilir.";
+                    else showErr("Başvurular alınamadı: " + res.status + " " + res.statusText);
+                    return;
+                }
+                const data = await res.json();
+                ul.innerHTML = "";
+                if (!Array.isArray(data) || data.length === 0) { ul.innerHTML = "<span class='muted'>Başvuru yok.</span>"; return; }
+                data.forEach(a => {
+                    const li = document.createElement("li");
+                    const name = escapeHtml(a.applicantName ?? a.ApplicantName);
+                    const mail = escapeHtml(a.applicantEmail ?? a.ApplicantEmail);
+                    li.innerHTML = `#${a.id ?? a.Id} — ${name} <span class="muted">(${mail})</span>`;
+                    ul.appendChild(li);
+                });
+            } catch (e) { $("applications").innerHTML = ""; showErr(e.message); }
+        }
+
+        // --------------- SignalR (realtime) ---------------
+        let connection;
+        function setConnStatus(state) {
+            const dot = $("connDot"), text = $("connText");
+            if (state === "ok") { dot.className = "dot ok"; text.textContent = "Bağlı"; }
+            else if (state === "warn") { dot.className = "dot warn"; text.textContent = "Yeniden bağlanıyor..."; }
+            else { dot.className = "dot err"; text.textContent = "Bağlı değil"; }
+        }
+
+        async function startHub() {
+            connection = new signalR.HubConnectionBuilder()
+                .withUrl("/hubs/jobs")
+                .withAutomaticReconnect()
+                .build();
+
+            connection.onreconnecting(() => setConnStatus("warn"));
+            connection.onreconnected(() => setConnStatus("ok"));
+            connection.onclose(() => setConnStatus("err"));
+
+            // JobCreated — server bu adı kullanmalı; güvenli tarafta kalmak için listeyi tazele
+            connection.on("JobCreated", job => {
+                setTimeout(loadJobs, 100); // küçük gecikme
+                toast("Yeni ilan yayınlandı", "ok");
+            });
+
+            // Application event — isim uyuşmazlığına karşı iki ismi de dinle
+            connection.on("JobApplicationCreated", app => handleAppEvent(app));
+            connection.on("ApplicationCreated", app => handleAppEvent(app)); // mevcut server bu olabilir
+
+            try {
+                await connection.start();
+                setConnStatus("ok");
+            } catch (e) {
+                setConnStatus("err");
+                // 2 sn sonra tekrar dene
+                setTimeout(startHub, 2000);
+            }
+        }
+
+        function handleAppEvent(app) {
+            // camelCase / PascalCase farkını tolere et
+            const jobId = app?.jobId ?? app?.JobId;
+            if (selectedJobId && jobId === selectedJobId) {
+                setTimeout(loadApplications, 100);
+                toast("Yeni başvuru alındı", "ok");
+            }
+        }
+
+        // --------------- Init ---------------
+        window.addEventListener("load", () => {
+            loadJobs();
+            startHub();
+            // Elle jobId yazılırsa da başvuruları getir
+            $("jobId").addEventListener("input", () => {
+                const v = parseInt($("jobId").value, 10);
+                selectedJobId = Number.isFinite(v) ? v : null;
+                if (selectedJobId) { $("appsInfo").textContent = "Job #" + selectedJobId + " başvuruları"; loadApplications(); }
+            });
         });
-        if(!res.ok){ showErr("Job oluşturulamadı: " + res.status); return; }
-        document.getElementById("createJobMsg").innerHTML = "<span class='ok'>Oluşturuldu.</span>";
-        document.getElementById("title").value="";
-        document.getElementById("desc").value="";
-        // Listeyi manuel yenilemeye gerek yok; JobCreated event gelecek
-      }catch(e){ showErr(e.message); }
-    }
-
-    async function loadJobs(){
-      clearErr();
-      const ul = document.getElementById("jobs");
-      const info = document.getElementById("jobsInfo");
-      ul.innerHTML = "Yükleniyor...";
-      info.textContent = "";
-      try{
-        const res = await fetch(api + "/api/Jobs");
-        if(!res.ok){ ul.innerHTML=""; showErr("Jobs alınamadı: " + res.status); return; }
-        const data = await res.json();
-        if(!Array.isArray(data) || data.length===0){ ul.innerHTML=""; info.textContent="Kayıt yok."; return; }
-        ul.innerHTML="";
-        for(const j of data){
-          const li = document.createElement("li");
-          li.className="job-item"+(selectedJobId===j.id ? " active":"");
-          li.textContent = "#" + j.id + " — " + j.title;
-            li.onclick = () => selectJob(j.id);
-          ul.appendChild(li);
-        }
-      }catch(e){ ul.innerHTML=""; showErr(e.message); }
-    }
-
-    function selectJob(id){
-      selectedJobId = id;
-      document.getElementById("jobId").value = id;
-      document.getElementById("appsInfo").textContent = "Job #"+id+" başvuruları";
-      document.querySelectorAll(".job-item").forEach(el=>{
-        el.classList.toggle("active", el.textContent.startsWith("#"+id));
-      });
-      loadApplications();
-    }
-
-    async function apply(){
-      clearErr();
-      const id = parseInt(document.getElementById("jobId").value,10);
-      const applicantName = document.getElementById("appName").value.trim();
-      const applicantEmail = document.getElementById("appEmail").value.trim();
-      if(!id || !applicantName || !applicantEmail){ showErr("Tüm alanlar zorunlu."); return; }
-      try{
-        const res = await fetch(api + `/api/Jobs/${id}/apply`,{
-          method:"POST",
-          headers:{"Content-Type":"application/json"},
-          body:JSON.stringify({ applicantName, applicantEmail })
-        });
-        if(!res.ok){ showErr("Başvuru başarısız: " + res.status); return; }
-        document.getElementById("applyMsg").innerHTML = "<span class='ok'>Başvuru alındı.</span>";
-        document.getElementById("appName").value="";
-        document.getElementById("appEmail").value="";
-        // Realtime event gelecek, seçili job ise liste yenilenecek
-      }catch(e){ showErr(e.message); }
-    }
-
-    async function loadApplications(){
-      clearErr();
-      let id = selectedJobId || parseInt(document.getElementById("jobId").value,10);
-      if(!id){
-        document.getElementById("appsInfo").textContent = "İş seçiniz.";
-        document.getElementById("applications").innerHTML = "";
-        return;
-      }
-      document.getElementById("appsInfo").textContent = "Job #"+id+" başvuruları";
-      const ul = document.getElementById("applications");
-      ul.innerHTML="Yükleniyor...";
-      try{
-        const res = await fetch(api + `/api/Jobs/${id}/applications`);
-        if(!res.ok){
-          ul.innerHTML="";
-          if(res.status===404){
-            document.getElementById("appsInfo").textContent="Başvurular endpoint'i yok.";
-          } else {
-            showErr("Başvurular alınamadı: " + res.status);
-          }
-          return;
-        }
-        const data = await res.json();
-        if(!Array.isArray(data) || data.length===0){
-          ul.innerHTML="<span class='muted'>Başvuru yok.</span>";
-          return;
-        }
-        ul.innerHTML="";
-        for(const a of data){
-          const li = document.createElement("li");
-          li.innerHTML = `#${a.id} — ${a.applicantName} <span class="muted">(${a.applicantEmail})</span>`;
-          ul.appendChild(li);
-        }
-      }catch(e){ ul.innerHTML=""; showErr(e.message); }
-    }
-
-    // SignalR bağlantısı
-    const connection = new signalR.HubConnectionBuilder()
-      .withUrl("/hubs/jobs")
-      .withAutomaticReconnect()
-      .build();
-
-    connection.on("JobCreated", job => {
-      // Job listeyi tekrar çekiyoruz (append de yapabilirdik)
-      loadJobs();
-    });
-
-    connection.on("JobApplicationCreated", app => {
-      if(selectedJobId && app && app.jobId === selectedJobId){
-        loadApplications();
-      }
-    });
-
-    async function startHub(){
-      try { await connection.start(); }
-      catch(e){ setTimeout(startHub,1500); }
-    }
-
-    window.addEventListener("load", ()=> {
-      loadJobs();
-      startHub();
-    });</script>
+    </script>
 </body>
 </html>
