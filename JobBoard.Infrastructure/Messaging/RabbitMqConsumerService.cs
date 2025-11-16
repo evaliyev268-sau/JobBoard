@@ -91,9 +91,9 @@ namespace JobBoard.Infrastructure.Messaging
             var consumer = new AsyncEventingBasicConsumer(_channel);
             consumer.ReceivedAsync += async (sender,ea) =>
             {
-                var jsonBody=Encoding.UTF8.GetString(ea.Body.ToArray());
-                var displayed=jsonBody.Length>500 ? jsonBody.Substring(0,500)+"...{truncated}" : jsonBody;
-                _logger.LogInformation("Received message: {Body}", displayed);
+                var rawBody = Encoding.UTF8.GetString(ea.Body.ToArray());
+                var preview = rawBody.Length > 500 ? rawBody[..500] + "...(truncated)" : rawBody;
+                _logger.LogInformation("Received message: {Body}", preview);
 
                 try
                 {
@@ -145,6 +145,7 @@ namespace JobBoard.Infrastructure.Messaging
             };
 
             _channel.BasicConsumeAsync(_opt.QueueName, autoAck: false, consumer: consumer);
+            _logger.LogInformation("Consumer is subscribed to queue {Queue}", _opt.QueueName);
 
             return Task.CompletedTask;
 
