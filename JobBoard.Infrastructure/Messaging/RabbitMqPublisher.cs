@@ -4,6 +4,7 @@ using System.Security.Authentication;
 using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
 
 
 
@@ -21,10 +22,12 @@ namespace JobBoard.Infrastructure.Messaging
         private readonly IConnection _conn;
         private readonly IChannel _ch;
         private readonly JsonSerializerOptions _jsonOptions = new(JsonSerializerDefaults.Web);
+        private readonly ILogger<RabbitMqPublisher> _logger;
 
-        public RabbitMqPublisher(IOptions<RabbitMqOptions> opt)
+        public RabbitMqPublisher(IOptions<RabbitMqOptions> opt, ILogger<RabbitMqPublisher> logger)
         {
             _opt = opt.Value;
+            _logger = logger;
             var factory = new ConnectionFactory
             {
                 HostName = _opt.Host,
@@ -48,6 +51,7 @@ namespace JobBoard.Infrastructure.Messaging
             _conn =  factory.CreateConnectionAsync().GetAwaiter().GetResult();
             _ch = _conn.CreateChannelAsync().GetAwaiter().GetResult();
             _ch.QueueDeclareAsync(_opt.QueueName, durable: true, exclusive: false, autoDelete: false, arguments: null).GetAwaiter().GetResult();
+            _logger.LogInformation("RabbitMqPublisher connexted to {Host}:{Port}",_opt.Host,_opt.Port);
         }
 
         public void Dispose()
@@ -64,6 +68,7 @@ namespace JobBoard.Infrastructure.Messaging
             var json = JsonSerializer.Serialize(payload, _jsonOptions);
             var bodyBytes = Encoding.UTF8.GetBytes(json);
             var bodyMemory= new ReadOnlyMemory<byte>(bodyBytes);
+            var preview = json.Length > 400 ? json[..400] + "...{truncated}" : json;
 
             BasicProperties props = new RabbitMQ.Client.BasicProperties
             {
@@ -72,11 +77,14 @@ namespace JobBoard.Infrastructure.Messaging
                 MessageId = Guid.NewGuid().ToString("N")
             };
 
+            _logger.LogInformation("Publishing message: {Preview}",preview);
 
 
             await _ch.BasicPublishAsync
             (exchange: "", routingKey: _opt.QueueName, mandatory: false, basicProperties:props, body: bodyMemory ).ConfigureAwait(false);
 
+            _logger.LogInformation("Message published. MessageId={MessageId}",props.MessageId
+            );
           
         }
     }

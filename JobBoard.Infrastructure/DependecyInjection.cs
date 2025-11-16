@@ -4,6 +4,7 @@ using JobBoard.Infrastructure.Messaging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace JobBoard.Infrastructure
@@ -24,11 +25,11 @@ namespace JobBoard.Infrastructure
                
                 if(string.IsNullOrWhiteSpace(opt.Host))
                 {
-                    return new NoopRabbitMqPublisher();
+                    return new NoopRabbitMqPublisher(sp.GetRequiredService<ILogger<NoopRabbitMqPublisher>>());
                     
                 }
 
-                return new RabbitMqPublisher(sp.GetRequiredService<IOptions<RabbitMqOptions>>());
+                return new RabbitMqPublisher(sp.GetRequiredService<IOptions<RabbitMqOptions>>(), sp.GetRequiredService<ILogger<RabbitMqPublisher>>());
 
             });
 
