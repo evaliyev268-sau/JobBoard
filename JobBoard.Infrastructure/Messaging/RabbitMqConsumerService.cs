@@ -8,14 +8,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Authentication;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace JobBoard.Infrastructure.Messaging
 {
@@ -96,6 +91,10 @@ namespace JobBoard.Infrastructure.Messaging
             var consumer = new AsyncEventingBasicConsumer(_channel);
             consumer.ReceivedAsync += async (sender,ea) =>
             {
+                var jsonBody=Encoding.UTF8.GetString(ea.Body.ToArray());
+                var displayed=jsonBody.Length>500 ? jsonBody.Substring(0,500)+"...{truncated}" : jsonBody;
+                _logger.LogInformation("Received message: {Body}", displayed);
+
                 try
                 {
                     var json = Encoding.UTF8.GetString(ea.Body.ToArray());
@@ -107,6 +106,9 @@ namespace JobBoard.Infrastructure.Messaging
                         await _channel.BasicAckAsync(ea.DeliveryTag, false, cancellationToken: stoppingToken);
                         return;
                     }
+
+                    _logger.LogInformation("Processing message for JobId {JobId}, ApplicantEmail {Email}...",evt.JobId, evt.ApplicantEmail);
+
                     using var scope = _sp.CreateScope();
                     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
@@ -117,6 +119,7 @@ namespace JobBoard.Infrastructure.Messaging
                     {
                         _logger.LogInformation("Duplicate application detected for JobId: {JobId}, ApplicantEmail: {ApplicantEmail}. Ignoring event.", evt.JobId, evt.ApplicantEmail);
                         await _channel.BasicAckAsync(ea.DeliveryTag, false, stoppingToken);
+                        return;
                     }
 
                     var app = new JobApplication

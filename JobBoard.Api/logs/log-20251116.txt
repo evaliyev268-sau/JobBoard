@@ -526,3 +526,385 @@ SELECT EXISTS (
 2025-11-16 13:48:48.309 +03:00 [INF] App started in Development
 2025-11-16 13:48:56.259 +03:00 [WRN] Failed to determine the https port for redirect.
 2025-11-16 13:51:58.437 +03:00 [INF] Application is shutting down...
+2025-11-16 13:52:27.861 +03:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-11-16 13:52:27.973 +03:00 [INF] Executed DbCommand (37ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "name" = '__EFMigrationsLock' AND "type" = 'table';
+2025-11-16 13:52:27.987 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT OR IGNORE INTO "__EFMigrationsLock"("Id", "Timestamp") VALUES(1, '2025-11-16 10:52:27.9818907+00:00');
+SELECT changes();
+2025-11-16 13:52:28.077 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+    "MigrationId" TEXT NOT NULL CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY,
+    "ProductVersion" TEXT NOT NULL
+);
+2025-11-16 13:52:28.097 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "name" = '__EFMigrationsHistory' AND "type" = 'table';
+2025-11-16 13:52:28.107 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-11-16 13:52:28.118 +03:00 [INF] No migrations were applied. The database is already up to date.
+2025-11-16 13:52:28.122 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DELETE FROM "__EFMigrationsLock";
+2025-11-16 13:52:28.400 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Jobs" AS "j")
+2025-11-16 13:52:30.536 +03:00 [INF] RabbitMqConsumerService started and connected to RabbitMQ at rabbit.lmq.cloudamqp.com:5671
+2025-11-16 13:52:30.660 +03:00 [INF] Now listening on: http://localhost:5199
+2025-11-16 13:52:30.664 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-16 13:52:30.666 +03:00 [INF] Hosting environment: Development
+2025-11-16 13:52:30.668 +03:00 [INF] Content root path: C:\Users\Elvin\JobBoard\JobBoard.Api
+2025-11-16 13:52:30.673 +03:00 [INF] App started in Development
+2025-11-16 13:52:36.340 +03:00 [WRN] Failed to determine the https port for redirect.
+2025-11-16 13:52:38.930 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."Description", "j"."PostedAt", "j"."Title"
+FROM "Jobs" AS "j"
+ORDER BY "j"."PostedAt" DESC
+2025-11-16 13:52:42.954 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:52:46.509 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[@p0='?' (Size = 29), @p1='?' (DbType = DateTime), @p2='?' (Size = 8)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Jobs" ("Description", "PostedAt", "Title")
+VALUES (@p0, @p1, @p2)
+RETURNING "Id";
+2025-11-16 13:52:46.680 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."Description", "j"."PostedAt", "j"."Title"
+FROM "Jobs" AS "j"
+ORDER BY "j"."PostedAt" DESC
+2025-11-16 13:52:47.398 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."Description", "j"."PostedAt", "j"."Title"
+FROM "Jobs" AS "j"
+ORDER BY "j"."PostedAt" DESC
+2025-11-16 13:52:50.934 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:52:51.333 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:52:51.362 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:52:51.395 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:52:52.519 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:52:52.747 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:52:54.161 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:52:55.757 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:52:55.895 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:52:59.441 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (Size = 24), @p1='?' (Size = 11), @p2='?' (DbType = DateTime), @p3='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "JobApplications" ("ApplicantEmail", "ApplicantName", "AppliedAt", "JobId")
+VALUES (@p0, @p1, @p2, @p3)
+RETURNING "Id";
+2025-11-16 13:52:59.604 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:53:00.311 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:53:03.539 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:53:03.948 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:53:07.085 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:53:10.678 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:53:13.089 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:53:14.868 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:53:15.775 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:53:17.648 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:53:18.877 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:53:19.476 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:53:20.068 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:53:23.373 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:53:31.641 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@p0='?' (Size = 29), @p1='?' (DbType = DateTime), @p2='?' (Size = 9)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Jobs" ("Description", "PostedAt", "Title")
+VALUES (@p0, @p1, @p2)
+RETURNING "Id";
+2025-11-16 13:53:31.765 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."Description", "j"."PostedAt", "j"."Title"
+FROM "Jobs" AS "j"
+ORDER BY "j"."PostedAt" DESC
+2025-11-16 13:53:32.472 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."Description", "j"."PostedAt", "j"."Title"
+FROM "Jobs" AS "j"
+ORDER BY "j"."PostedAt" DESC
+2025-11-16 13:54:19.725 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:54:22.100 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:54:23.993 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:54:24.962 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:54:26.725 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:54:28.175 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:54:30.584 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:54:33.029 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@p0='?' (Size = 29), @p1='?' (DbType = DateTime), @p2='?' (Size = 7)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Jobs" ("Description", "PostedAt", "Title")
+VALUES (@p0, @p1, @p2)
+RETURNING "Id";
+2025-11-16 13:54:33.162 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."Description", "j"."PostedAt", "j"."Title"
+FROM "Jobs" AS "j"
+ORDER BY "j"."PostedAt" DESC
+2025-11-16 13:54:33.859 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."Description", "j"."PostedAt", "j"."Title"
+FROM "Jobs" AS "j"
+ORDER BY "j"."PostedAt" DESC
+2025-11-16 13:54:41.306 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:54:41.461 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:54:43.757 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@p0='?' (Size = 23), @p1='?' (Size = 13), @p2='?' (DbType = DateTime), @p3='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "JobApplications" ("ApplicantEmail", "ApplicantName", "AppliedAt", "JobId")
+VALUES (@p0, @p1, @p2, @p3)
+RETURNING "Id";
+2025-11-16 13:54:43.877 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:54:44.587 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:58:56.065 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."Description", "j"."PostedAt", "j"."Title"
+FROM "Jobs" AS "j"
+ORDER BY "j"."PostedAt" DESC
+2025-11-16 13:59:02.168 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:59:04.780 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@p0='?' (Size = 29), @p1='?' (DbType = DateTime), @p2='?' (Size = 8)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Jobs" ("Description", "PostedAt", "Title")
+VALUES (@p0, @p1, @p2)
+RETURNING "Id";
+2025-11-16 13:59:04.908 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."Description", "j"."PostedAt", "j"."Title"
+FROM "Jobs" AS "j"
+ORDER BY "j"."PostedAt" DESC
+2025-11-16 13:59:05.609 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."Description", "j"."PostedAt", "j"."Title"
+FROM "Jobs" AS "j"
+ORDER BY "j"."PostedAt" DESC
+2025-11-16 13:59:09.485 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:59:09.594 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:59:20.854 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:59:21.667 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:59:23.052 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:59:23.895 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:59:25.992 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@p0='?' (Size = 27), @p1='?' (Size = 14), @p2='?' (DbType = DateTime), @p3='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "JobApplications" ("ApplicantEmail", "ApplicantName", "AppliedAt", "JobId")
+VALUES (@p0, @p1, @p2, @p3)
+RETURNING "Id";
+2025-11-16 13:59:26.120 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 13:59:26.832 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 14:02:25.047 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."Description", "j"."PostedAt", "j"."Title"
+FROM "Jobs" AS "j"
+ORDER BY "j"."PostedAt" DESC
+2025-11-16 14:02:29.469 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 14:02:29.746 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 14:02:30.982 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 14:02:33.073 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 14:02:33.200 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 14:02:34.536 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 14:02:43.204 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."Description", "j"."PostedAt", "j"."Title"
+FROM "Jobs" AS "j"
+ORDER BY "j"."PostedAt" DESC
+2025-11-16 14:02:54.481 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 14:02:55.223 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 14:02:55.660 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 14:02:56.175 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 14:03:38.331 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."Description", "j"."PostedAt", "j"."Title"
+FROM "Jobs" AS "j"
+ORDER BY "j"."PostedAt" DESC
+2025-11-16 14:34:37.412 +03:00 [INF] Application is shutting down...
