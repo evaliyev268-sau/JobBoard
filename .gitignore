@@ -1,16 +1,19 @@
-# Visual Studio 
-.vs/
-*.suo
+# Derleme Ciktilari
+bin/
+obj/
+
+# Log Dosyalari
+*.log
+logs/
+
+# Veritabani Gecici Dosyalari (SQLite vb.)
+*.db-shm
+*.db-wal
+*.sqlite-shm
+*.sqlite-wal
+
+# IDE ve Editor Dosyalari
+.vscode/
+.idea/
 *.user
-*.bak
-*.ncb
-*.pdb
-*.obj
- 
-# Binaries (Derleme Çıktıları)
-[Bb]in/
-[Oo]bj/
- 
-# Packages (Paketler)
-packages/
-*.nupkg
+*.suo

@@ -1438,3 +1438,173 @@ SELECT EXISTS (
 2025-11-16 15:30:37.173 +03:00 [INF] Hosting environment: Development
 2025-11-16 15:30:37.176 +03:00 [INF] Content root path: C:\Users\Elvin\JobBoard\JobBoard.Api
 2025-11-16 15:30:37.180 +03:00 [INF] App started in Development
+2025-11-16 21:36:27.716 +03:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-11-16 21:36:27.844 +03:00 [INF] Executed DbCommand (50ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "name" = '__EFMigrationsLock' AND "type" = 'table';
+2025-11-16 21:36:27.857 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT OR IGNORE INTO "__EFMigrationsLock"("Id", "Timestamp") VALUES(1, '2025-11-16 18:36:27.854024+00:00');
+SELECT changes();
+2025-11-16 21:36:27.944 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+    "MigrationId" TEXT NOT NULL CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY,
+    "ProductVersion" TEXT NOT NULL
+);
+2025-11-16 21:36:27.959 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "name" = '__EFMigrationsHistory' AND "type" = 'table';
+2025-11-16 21:36:27.966 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-11-16 21:36:27.979 +03:00 [INF] No migrations were applied. The database is already up to date.
+2025-11-16 21:36:27.983 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DELETE FROM "__EFMigrationsLock";
+2025-11-16 21:36:28.259 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Jobs" AS "j")
+2025-11-16 21:36:30.912 +03:00 [INF] RabbitMqConsumerService started and connected to RabbitMQ at rabbit.lmq.cloudamqp.com:5671
+2025-11-16 21:36:30.930 +03:00 [INF] Consumer is subscribed to queue job_applications
+2025-11-16 21:36:31.034 +03:00 [INF] Now listening on: http://localhost:5199
+2025-11-16 21:36:31.036 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-16 21:36:31.037 +03:00 [INF] Hosting environment: Development
+2025-11-16 21:36:31.040 +03:00 [INF] Content root path: C:\Users\Elvin\JobBoard\JobBoard.Api
+2025-11-16 21:36:31.043 +03:00 [INF] App started in Development
+2025-11-16 21:36:38.076 +03:00 [WRN] Failed to determine the https port for redirect.
+2025-11-16 21:36:40.125 +03:00 [INF] RabbitMqPublisher connexted to rabbit.lmq.cloudamqp.com:5671
+2025-11-16 21:36:40.337 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."Description", "j"."PostedAt", "j"."Title"
+FROM "Jobs" AS "j"
+ORDER BY "j"."PostedAt" DESC
+2025-11-16 21:39:24.475 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."Description", "j"."PostedAt", "j"."Title"
+FROM "Jobs" AS "j"
+ORDER BY "j"."PostedAt" DESC
+2025-11-16 21:39:45.767 +03:00 [INF] Executed DbCommand (5ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 21:39:53.337 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 21:39:56.072 +03:00 [INF] Executed DbCommand (4ms) [Parameters=[@p0='?' (Size = 29), @p1='?' (DbType = DateTime), @p2='?' (Size = 8)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Jobs" ("Description", "PostedAt", "Title")
+VALUES (@p0, @p1, @p2)
+RETURNING "Id";
+2025-11-16 21:39:56.258 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."Description", "j"."PostedAt", "j"."Title"
+FROM "Jobs" AS "j"
+ORDER BY "j"."PostedAt" DESC
+2025-11-16 21:39:57.007 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."Description", "j"."PostedAt", "j"."Title"
+FROM "Jobs" AS "j"
+ORDER BY "j"."PostedAt" DESC
+2025-11-16 21:39:58.898 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 21:39:59.274 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 21:40:01.871 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@p0='?' (Size = 26), @p1='?' (Size = 15), @p2='?' (DbType = DateTime), @p3='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "JobApplications" ("ApplicantEmail", "ApplicantName", "AppliedAt", "JobId")
+VALUES (@p0, @p1, @p2, @p3)
+RETURNING "Id";
+2025-11-16 21:40:01.902 +03:00 [INF] Publishing message: {"type":"JobApplicationCreated","jobId":26,"applicationId":20,"applicantName":"Richard Jackson","applicantEmail":"john.rodriguez888@demo.com","appliedAt":"2025-11-16T18:40:01.8352982Z","messageId":"8c86afb52c0347b6a75e302f0c6d8d1b"}
+2025-11-16 21:40:01.928 +03:00 [INF] Message published. MessageId=d87922e8c4fd4147b579c39c6814865a
+2025-11-16 21:40:02.050 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 21:40:02.760 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[@__jobId_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."ApplicantEmail", "j"."ApplicantName", "j"."AppliedAt", "j"."JobId"
+FROM "JobApplications" AS "j"
+WHERE "j"."JobId" = @__jobId_0
+ORDER BY "j"."AppliedAt" DESC
+2025-11-16 21:41:14.439 +03:00 [INF] Application is shutting down...
+2025-11-16 21:41:27.649 +03:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-11-16 21:41:27.735 +03:00 [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "name" = '__EFMigrationsLock' AND "type" = 'table';
+2025-11-16 21:41:27.747 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT OR IGNORE INTO "__EFMigrationsLock"("Id", "Timestamp") VALUES(1, '2025-11-16 18:41:27.7443227+00:00');
+SELECT changes();
+2025-11-16 21:41:27.828 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+    "MigrationId" TEXT NOT NULL CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY,
+    "ProductVersion" TEXT NOT NULL
+);
+2025-11-16 21:41:27.838 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "name" = '__EFMigrationsHistory' AND "type" = 'table';
+2025-11-16 21:41:27.844 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-11-16 21:41:27.855 +03:00 [INF] No migrations were applied. The database is already up to date.
+2025-11-16 21:41:27.858 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DELETE FROM "__EFMigrationsLock";
+2025-11-16 21:41:28.123 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Jobs" AS "j")
+2025-11-16 21:41:30.436 +03:00 [INF] RabbitMqConsumerService started and connected to RabbitMQ at rabbit.lmq.cloudamqp.com:5671
+2025-11-16 21:41:30.454 +03:00 [INF] Consumer is subscribed to queue job_applications
+2025-11-16 21:41:30.559 +03:00 [INF] Now listening on: http://localhost:5199
+2025-11-16 21:41:30.564 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-16 21:41:30.567 +03:00 [INF] Hosting environment: Development
+2025-11-16 21:41:30.570 +03:00 [INF] Content root path: C:\Users\Elvin\JobBoard\JobBoard.Api
+2025-11-16 21:41:30.575 +03:00 [INF] App started in Development
+2025-11-16 21:41:33.103 +03:00 [WRN] Failed to determine the https port for redirect.
+2025-11-16 21:41:35.242 +03:00 [INF] RabbitMqPublisher connexted to rabbit.lmq.cloudamqp.com:5671
+2025-11-16 21:41:35.497 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."Description", "j"."PostedAt", "j"."Title"
+FROM "Jobs" AS "j"
+ORDER BY "j"."PostedAt" DESC
+2025-11-16 21:42:02.147 +03:00 [INF] Application is shutting down...
+2025-11-16 21:42:42.405 +03:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-11-16 21:42:42.490 +03:00 [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "name" = '__EFMigrationsLock' AND "type" = 'table';
+2025-11-16 21:42:42.513 +03:00 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT OR IGNORE INTO "__EFMigrationsLock"("Id", "Timestamp") VALUES(1, '2025-11-16 18:42:42.5016639+00:00');
+SELECT changes();
+2025-11-16 21:42:42.594 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+    "MigrationId" TEXT NOT NULL CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY,
+    "ProductVersion" TEXT NOT NULL
+);
+2025-11-16 21:42:42.605 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*) FROM "sqlite_master" WHERE "name" = '__EFMigrationsHistory' AND "type" = 'table';
+2025-11-16 21:42:42.613 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-11-16 21:42:42.628 +03:00 [INF] No migrations were applied. The database is already up to date.
+2025-11-16 21:42:42.634 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+DELETE FROM "__EFMigrationsLock";
+2025-11-16 21:42:42.926 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Jobs" AS "j")
+2025-11-16 21:42:45.799 +03:00 [INF] RabbitMqConsumerService started and connected to RabbitMQ at rabbit.lmq.cloudamqp.com:5671
+2025-11-16 21:42:45.817 +03:00 [INF] Consumer is subscribed to queue job_applications
+2025-11-16 21:42:45.902 +03:00 [INF] Now listening on: http://localhost:5199
+2025-11-16 21:42:45.905 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-11-16 21:42:45.907 +03:00 [INF] Hosting environment: Development
+2025-11-16 21:42:45.910 +03:00 [INF] Content root path: C:\Users\Elvin\JobBoard\JobBoard.Api
+2025-11-16 21:42:45.915 +03:00 [INF] App started in Development
+2025-11-16 21:42:46.873 +03:00 [WRN] Failed to determine the https port for redirect.
+2025-11-16 21:42:48.772 +03:00 [INF] RabbitMqPublisher connexted to rabbit.lmq.cloudamqp.com:5671
+2025-11-16 21:42:48.905 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."Description", "j"."PostedAt", "j"."Title"
+FROM "Jobs" AS "j"
+ORDER BY "j"."PostedAt" DESC
+2025-11-16 21:43:03.176 +03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "j"."Id", "j"."Description", "j"."PostedAt", "j"."Title"
+FROM "Jobs" AS "j"
+ORDER BY "j"."PostedAt" DESC
+2025-11-16 21:46:37.699 +03:00 [INF] Application is shutting down...
