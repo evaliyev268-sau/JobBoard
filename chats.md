@@ -575,7 +575,7 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 ````
 
-**Geliştirici:** Artık derleniy or! Teşekkürler.
+**Geliştirici:** Artık derleniyor! Teşekkürler.
 
 **Console Output:**
 ```
