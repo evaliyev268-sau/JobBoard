@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("JobBoard.WebApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bbe3535e8f2da50aea69096b55f6b7e0f4875d43")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a0fc009132dfeafbca6f8670e5a881e3a2ec0747")]
 [assembly: System.Reflection.AssemblyProductAttribute("JobBoard.WebApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("JobBoard.WebApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

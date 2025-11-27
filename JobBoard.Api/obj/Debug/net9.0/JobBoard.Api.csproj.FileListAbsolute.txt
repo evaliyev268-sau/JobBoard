@@ -175,4 +175,5 @@ C:\Users\Elvin\JobBoard\JobBoard.Api\bin\Debug\net9.0\Serilog.Sinks.Console.dll
 C:\Users\Elvin\JobBoard\JobBoard.Api\bin\Debug\net9.0\Serilog.Sinks.Debug.dll
 C:\Users\Elvin\JobBoard\JobBoard.Api\bin\Debug\net9.0\Serilog.Sinks.File.dll
 C:\Users\Elvin\JobBoard\JobBoard.Api\bin\Debug\net9.0\Newtonsoft.Json.dll
-C:\Users\Elvin\JobBoard\JobBoard.Api\obj\Debug\net9.0\compressed\jevzwu5q1s-yjipf95rki.gz
+C:\Users\Elvin\JobBoard\JobBoard.Api\obj\Debug\net9.0\compressed\jevzwu5q1s-9vq9prkv2j.gz
+C:\Users\Elvin\JobBoard\JobBoard.Api\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
