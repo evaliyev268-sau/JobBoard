@@ -25,9 +25,9 @@ namespace JobBoard.Infrastructure.Messaging
         private RabbitMQ.Client.IModel? _channel;
         private readonly JsonSerializerOptions _jsonOptions = new(JsonSerializerDefaults.Web);
 
-        public RabbitMqConsumerService(RabbitMqOptions opt,ILogger<RabbitMqConsumerService> logger,IServiceProvider sp)
+        public RabbitMqConsumerService(IOptions<RabbitMqOptions> opt,ILogger<RabbitMqConsumerService> logger,IServiceProvider sp)
         {
-            _opt = opt;
+            _opt = opt.Value;
             _logger = logger;
             _sp = sp;
         }
@@ -91,6 +91,9 @@ namespace JobBoard.Infrastructure.Messaging
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
+
+            _logger.LogWarning("=== DEBUG: ExecuteAsync started, Channel IsOpen: {IsOpen} ===", _channel?.IsOpen);
+
             if (_channel == null)
             {
                 _logger.LogWarning("Channel is null");
