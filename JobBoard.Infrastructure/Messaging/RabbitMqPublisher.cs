@@ -1,18 +1,9 @@
 ﻿using JobBoard.Application.Abstractions;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
-using System.Security.Authentication;
 using System.Text;
 using System.Text.Json;
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Logging;
-
-
-
-//using RmqConnectionFactory = RabbitMQ.Client.ConnectionFactory;
-//using RmqIConnection = RabbitMQ.Client.IConnection;
-//using RmqIChannel = RabbitMQ.Client.IChannel;
-//using RmqIBasicProperties = RabbitMQ.Client.IBasicProperties;
-
 
 namespace JobBoard.Infrastructure.Messaging
 {
@@ -20,72 +11,88 @@ namespace JobBoard.Infrastructure.Messaging
     {
         private readonly RabbitMqOptions _opt;
         private readonly IConnection _conn;
-        private readonly IChannel _ch;
-        private readonly JsonSerializerOptions _jsonOptions = new(JsonSerializerDefaults.Web);
+        private readonly IModel _ch;
         private readonly ILogger<RabbitMqPublisher> _logger;
+        private readonly JsonSerializerOptions _jsonOptions = new(JsonSerializerDefaults.Web);
 
-        public RabbitMqPublisher(IOptions<RabbitMqOptions> opt, ILogger<RabbitMqPublisher> logger)
+        public RabbitMqPublisher(RabbitMqOptions opt, ILogger<RabbitMqPublisher> logger)
         {
-            _opt = opt.Value;
+            _opt = opt;
             _logger = logger;
-            var factory = new ConnectionFactory
-            {
-                HostName = _opt.Host,
-                Port = _opt.Port,
-                UserName = _opt.UserName,
-                Password = _opt.Password,
-                VirtualHost = _opt.VirtualHost,
-                AutomaticRecoveryEnabled = true,
 
-                RequestedHeartbeat = TimeSpan.FromSeconds(30)
-            };
+
+            var factory = new ConnectionFactory { 
+                HostName = _opt.Host,
+                Port= _opt.Port,
+                UserName = _opt.UserName,
+                Password= _opt.Password,
+                VirtualHost = _opt.VirtualHost,
+                AutomaticRecoveryEnabled=true
+               
+                };
+
+
             if (_opt.UseSsl)
             {
                 factory.Ssl = new SslOption
                 {
                     Enabled = true,
-                    Version = SslProtocols.Tls12,
-                    ServerName = _opt.Host
+                    ServerName=_opt.Host
                 };
             }
-            _conn =  factory.CreateConnectionAsync().GetAwaiter().GetResult();
-            _ch = _conn.CreateChannelAsync().GetAwaiter().GetResult();
-            _ch.QueueDeclareAsync(_opt.QueueName, durable: true, exclusive: false, autoDelete: false, arguments: null).GetAwaiter().GetResult();
-            _logger.LogInformation("RabbitMqPublisher connexted to {Host}:{Port}",_opt.Host,_opt.Port);
+
+            _conn = factory.CreateConnection();
+            _ch = _conn.CreateModel();
+
+            _ch.QueueDeclare(
+                queue:_opt.QueueName,
+                durable:true,
+                exclusive:false,
+                autoDelete:false,
+                arguments:null
+                
+             
+                );
+
+            _logger.LogInformation("RMQ Publisher connected to {Host}:{Port}",_opt.Host,_opt.Port);
+
+
         }
+
+
 
         public void Dispose()
         {
-            
-            (_ch as IDisposable)?.Dispose();
-            (_conn as IDisposable)?.Dispose();
-
-
+            _ch?.Dispose();
+            _conn?.Dispose();
         }
 
-        public async Task PublishAsync(object payload, CancellationToken ct = default)
+        public Task PublishAsync(object payload, CancellationToken ct = default)
         {
-            var json = JsonSerializer.Serialize(payload, _jsonOptions);
-            var bodyBytes = Encoding.UTF8.GetBytes(json);
-            var bodyMemory= new ReadOnlyMemory<byte>(bodyBytes);
-            var preview = json.Length > 400 ? json[..400] + "...{truncated}" : json;
+            var json = JsonSerializer.Serialize
+                (payload, _jsonOptions);
+            var body = Encoding.UTF8.GetBytes(json);
 
-            BasicProperties props = new RabbitMQ.Client.BasicProperties
-            {
-                ContentType = "application/json",
-                DeliveryMode = RabbitMQ.Client.DeliveryModes.Persistent,
-                MessageId = Guid.NewGuid().ToString("N")
-            };
-
-            _logger.LogInformation("Publishing message: {Preview}",preview);
+            var props = _ch.CreateBasicProperties();
+            props.Persistent = true;
+            props.ContentType = "applications/json";
+            props.MessageId = Guid.NewGuid().ToString("N");
 
 
-            await _ch.BasicPublishAsync
-            (exchange: "", routingKey: _opt.QueueName, mandatory: false, basicProperties:props, body: bodyMemory ).ConfigureAwait(false);
+            _ch.BasicPublish(
+                exchange:"",
+                routingKey:_opt.QueueName,
+                basicProperties:props,
+                body:body
 
-            _logger.LogInformation("Message published. MessageId={MessageId}",props.MessageId
-            );
-          
+                
+                
+                );
+
+            _logger.LogInformation("Message Published. MessageId:{Id}", props.MessageId);
+
+
+            return Task.CompletedTask;
         }
     }
 }

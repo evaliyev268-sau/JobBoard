@@ -20,6 +20,9 @@ namespace JobBoard.Infrastructure
 
             services.Configure<RabbitMqOptions>(config.GetSection("RabbitMq"));
 
+            services.AddSingleton(sp =>
+    sp.GetRequiredService<IOptions<RabbitMqOptions>>().Value);
+
             services.AddSingleton<IRabbitMqPublisher>(sp => {
                 var opt = sp.GetRequiredService<IOptions<RabbitMqOptions>>().Value;
                
@@ -29,7 +32,7 @@ namespace JobBoard.Infrastructure
                     
                 }
 
-                return new RabbitMqPublisher(sp.GetRequiredService<IOptions<RabbitMqOptions>>(), sp.GetRequiredService<ILogger<RabbitMqPublisher>>());
+                return new RabbitMqPublisher(opt, sp.GetRequiredService<ILogger<RabbitMqPublisher>>());
 
             });
 

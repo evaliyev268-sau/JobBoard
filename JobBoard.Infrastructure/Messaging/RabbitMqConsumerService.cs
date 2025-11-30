@@ -2,12 +2,14 @@
 using JobBoard.Core.Models;
 using JobBoard.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using System.Runtime.CompilerServices;
 using System.Security.Authentication;
 using System.Text;
 using System.Text.Json;
@@ -17,33 +19,27 @@ namespace JobBoard.Infrastructure.Messaging
     public class RabbitMqConsumerService : BackgroundService
     {
         private readonly RabbitMqOptions _opt;
-        private readonly IServiceProvider _sp;
         private readonly ILogger<RabbitMqConsumerService> _logger;
+        private readonly IServiceProvider _sp;
         private IConnection? _connection;
-        private IChannel? _channel;
+        private RabbitMQ.Client.IModel? _channel;
         private readonly JsonSerializerOptions _jsonOptions = new(JsonSerializerDefaults.Web);
 
-
-        public RabbitMqConsumerService(IOptions<RabbitMqOptions> opt, IServiceProvider sp, ILogger<RabbitMqConsumerService> logger)
+        public RabbitMqConsumerService(RabbitMqOptions opt,ILogger<RabbitMqConsumerService> logger,IServiceProvider sp)
         {
-            _opt = opt.Value;
-            _sp = sp;
+            _opt = opt;
             _logger = logger;
+            _sp = sp;
         }
 
-
-        public override async Task StartAsync(CancellationToken ct)
+        public override Task StartAsync(CancellationToken cancellationToken)
         {
-
-            //No Host
             if (string.IsNullOrWhiteSpace(_opt.Host))
             {
-                _logger.LogWarning("RabbitMQ host is not configured. RabbitMqConsumerService will not start.");
-                return;
+                _logger.LogWarning("RabbitMQ host isn t configured");
+                return Task.CompletedTask;
             }
 
-
-            //Create Factory
             var factory = new ConnectionFactory
             {
                 HostName = _opt.Host,
@@ -53,75 +49,93 @@ namespace JobBoard.Infrastructure.Messaging
                 VirtualHost = _opt.VirtualHost,
                 AutomaticRecoveryEnabled = true,
                 RequestedHeartbeat = TimeSpan.FromSeconds(30)
+               
             };
 
-            //Ssl
             if (_opt.UseSsl)
             {
                 factory.Ssl = new SslOption
                 {
                     Enabled = true,
-                    Version = SslProtocols.Tls12,
                     ServerName = _opt.Host
                 };
             }
-            //Create Connection & Channel
-            _connection = await factory.CreateConnectionAsync(ct).ConfigureAwait(false);
-            _channel = await _connection.CreateChannelAsync(cancellationToken:ct).ConfigureAwait(false);
+
+                _connection = factory.CreateConnection();
+                _channel = _connection.CreateModel();
+
+                _channel.QueueDeclare(
+                    queue:_opt.QueueName,
+                    durable:true,
+                    exclusive:false,
+                    autoDelete:false,
+                    arguments:null
+                    
+                    
+                    );
+
+                _channel.BasicQos(prefetchSize: 0, prefetchCount: _opt.PrefetchCount, global: false);
+
+                _logger.LogInformation("RabbitMqConsumerService connected to {Host}:{Port}",_opt.Host,_opt.Port);
+
+            _logger.LogWarning("=== DEBUG: Channel IsOpen: {IsOpen} ===", _channel?.IsOpen);
+            _logger.LogWarning("=== DEBUG: Connection IsOpen: {IsOpen} ===", _connection?.IsOpen);
+
+            return base.StartAsync(cancellationToken);
+            }
 
 
-            //Declare Queue
-            await _channel.QueueDeclareAsync(_opt.QueueName, durable: true, exclusive: false, autoDelete: false, arguments: null, cancellationToken: ct).ConfigureAwait(false);
-
-            //Set Qos
-            await _channel.BasicQosAsync(prefetchSize: 0, prefetchCount: _opt.PrefetchCount, global: false, cancellationToken: ct).ConfigureAwait(false);
+        
 
 
-            //Connection Log
-            _logger.LogInformation("RabbitMqConsumerService started and connected to RabbitMQ at {Host}:{Port}", _opt.Host, _opt.Port);
-
-            await base.StartAsync(ct);
-        }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            //No channel
-            if (_channel == null) return Task.CompletedTask;
-
-            var consumer = new AsyncEventingBasicConsumer(_channel);
-            consumer.ReceivedAsync += async (sender,ea) =>
+            if (_channel == null)
             {
-                var rawBody = Encoding.UTF8.GetString(ea.Body.ToArray());
-                var preview = rawBody.Length > 500 ? rawBody[..500] + "...(truncated)" : rawBody;
-                _logger.LogInformation("Received message: {Body}", preview);
+                _logger.LogWarning("Channel is null");
+                return Task.CompletedTask;
+            }
+
+            var consumer = new EventingBasicConsumer(_channel);
+
+            consumer.Received += (sender, ea) =>
+            {
+                _logger.LogInformation("###Message Received###");
+                var body = ea.Body.ToArray();
+                var json=Encoding.UTF8.GetString(body);
+                var preview = json.Length > 500 ? json[..500] + "..." : json;
+                _logger.LogInformation("Message:{Body}", preview);
+
 
                 try
                 {
-                    var json = Encoding.UTF8.GetString(ea.Body.ToArray());
                     var evt = JsonSerializer.Deserialize<JobApplicationCreatedEvent>(json, _jsonOptions);
-
                     if (evt == null || evt.Type != "JobApplicationCreated")
                     {
-                        _logger.LogWarning("Received invalid or unknown event.");
-                        await _channel.BasicAckAsync(ea.DeliveryTag, false, cancellationToken: stoppingToken);
+                        _logger.LogWarning("Invalid event type.");
+                        _channel.BasicAck(ea.DeliveryTag, false);
                         return;
                     }
 
-                    _logger.LogInformation("Processing message for JobId {JobId}, ApplicantEmail {Email}...",evt.JobId, evt.ApplicantEmail);
+                    _logger.LogInformation("Processing JobId {JobId}.. .", evt.JobId);
 
                     using var scope = _sp.CreateScope();
                     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-                    var duplicate = await db.JobApplications.AnyAsync(a => a.JobId == evt.JobId && a.ApplicantEmail == evt.ApplicantEmail && a.AppliedAt == evt.AppliedAt, stoppingToken);
-
+                  
+                    var duplicate = db.JobApplications.Any(
+                        a => a.JobId == evt.JobId &&
+                             a.ApplicantEmail == evt.ApplicantEmail);
 
                     if (duplicate)
                     {
-                        _logger.LogInformation("Duplicate application detected for JobId: {JobId}, ApplicantEmail: {ApplicantEmail}. Ignoring event.", evt.JobId, evt.ApplicantEmail);
-                        await _channel.BasicAckAsync(ea.DeliveryTag, false, stoppingToken);
+                        _logger.LogInformation("Duplicate detected, skipping.");
+                        _channel.BasicAck(ea.DeliveryTag, false);
                         return;
                     }
 
+                   
                     var app = new JobApplication
                     {
                         JobId = evt.JobId,
@@ -129,33 +143,47 @@ namespace JobBoard.Infrastructure.Messaging
                         ApplicantEmail = evt.ApplicantEmail,
                         AppliedAt = evt.AppliedAt
                     };
+
                     db.JobApplications.Add(app);
-                    await db.SaveChangesAsync(stoppingToken);
+                    db.SaveChanges();
 
-                    await _channel.BasicAckAsync(ea.DeliveryTag, false, stoppingToken);
-                    _logger.LogInformation("Processed JobApplicationCreated event for JobId: {JobId}, ApplicantEmail: {ApplicantEmail}", evt.JobId, evt.ApplicantEmail);
+                    _channel.BasicAck(ea.DeliveryTag, false);
+                    _logger.LogInformation("Condumed: JobId={JobId}, Email={Email}", evt.JobId, evt.ApplicantEmail);
+
+                }
+                catch (Exception ex) {
+
+                    _logger.LogError(ex, "Error proccessing message");
+                    _channel.BasicNack(ea.DeliveryTag, false, true);
 
                 }
 
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Error processing message: {Message}", ex.Message);
-                    await _channel!.BasicNackAsync(ea.DeliveryTag, false, true, stoppingToken);
-                }
             };
 
-            _channel.BasicConsumeAsync(_opt.QueueName, autoAck: false, consumer: consumer);
-            _logger.LogInformation("Consumer is subscribed to queue {Queue}", _opt.QueueName);
+            _channel.BasicConsume(
+                queue:_opt.QueueName,
+                autoAck:false,
+                consumer:consumer
 
-            return Task.CompletedTask;
+                );
+
+            _logger.LogInformation("Consumer subscribed to queue:{Queue}",_opt.QueueName);
+
+            return Task.Delay(Timeout.Infinite, stoppingToken);
 
         }
-        
+
         public override void Dispose()
         {
-            (_channel as IDisposable)?.Dispose();
-            (_connection as IDisposable)?.Dispose();
+            _channel?.Close();
+            _connection?.Close();
             base.Dispose();
+
         }
+
+
+
+
+
     }
 }
