@@ -29,6 +29,7 @@
     <ProjectReference Include="..\JobBoard.Core\JobBoard.Core.csproj" />
     <ProjectReference Include="..\JobBoard.Application\JobBoard.Application.csproj" />
     <ProjectReference Include="..\JobBoard.Infrastructure\JobBoard.Infrastructure.csproj" />
+    <ProjectReference Include="..\JobBoard.WebApp\JobBoard.WebApp.csproj" />
   </ItemGroup>
 
 </Project>

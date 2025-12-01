@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\JobBoard.Core\JobBoard.Core.csproj" />
+    <ProjectReference Include="..\JobBoard.WebApp\JobBoard.WebApp.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

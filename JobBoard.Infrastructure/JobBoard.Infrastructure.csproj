@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\JobBoard.Application\JobBoard.Application.csproj" />
     <ProjectReference Include="..\JobBoard.Core\JobBoard.Core.csproj" />
+    <ProjectReference Include="..\JobBoard.WebApp\JobBoard.WebApp.csproj" />
   </ItemGroup>
 
   <ItemGroup>
