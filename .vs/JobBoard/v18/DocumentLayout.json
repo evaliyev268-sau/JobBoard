@@ -3,10 +3,6 @@
   "WorkspaceRootPath": "C:\\Users\\Elvin\\Repos\\JobBoard\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F3938CB2-31C8-4CE3-9EAD-C5F96E6C4D01}|JobBoard.Infrastructure\\JobBoard.Infrastructure.csproj|c:\\users\\elvin\\repos\\jobboard\\jobboard.infrastructure\\dependecyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F3938CB2-31C8-4CE3-9EAD-C5F96E6C4D01}|JobBoard.Infrastructure\\JobBoard.Infrastructure.csproj|solutionrelative:jobboard.infrastructure\\dependecyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{F3938CB2-31C8-4CE3-9EAD-C5F96E6C4D01}|JobBoard.Infrastructure\\JobBoard.Infrastructure.csproj|c:\\users\\elvin\\repos\\jobboard\\jobboard.infrastructure\\messaging\\rabbitmqconsumer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F3938CB2-31C8-4CE3-9EAD-C5F96E6C4D01}|JobBoard.Infrastructure\\JobBoard.Infrastructure.csproj|solutionrelative:jobboard.infrastructure\\messaging\\rabbitmqconsumer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -17,6 +13,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{E6B2BD43-F60A-436F-8DD9-09DBEEAFAADE}|JobBoard.Application\\JobBoard.Application.csproj|c:\\users\\elvin\\repos\\jobboard\\jobboard.application\\abstractions\\irabbitmqconsumer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E6B2BD43-F60A-436F-8DD9-09DBEEAFAADE}|JobBoard.Application\\JobBoard.Application.csproj|solutionrelative:jobboard.application\\abstractions\\irabbitmqconsumer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F3938CB2-31C8-4CE3-9EAD-C5F96E6C4D01}|JobBoard.Infrastructure\\JobBoard.Infrastructure.csproj|c:\\users\\elvin\\repos\\jobboard\\jobboard.infrastructure\\dependecyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F3938CB2-31C8-4CE3-9EAD-C5F96E6C4D01}|JobBoard.Infrastructure\\JobBoard.Infrastructure.csproj|solutionrelative:jobboard.infrastructure\\dependecyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F3938CB2-31C8-4CE3-9EAD-C5F96E6C4D01}|JobBoard.Infrastructure\\JobBoard.Infrastructure.csproj|c:\\users\\elvin\\repos\\jobboard\\jobboard.infrastructure\\messaging\\rabbitmqpublisher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -66,7 +66,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -90,13 +90,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "RabbitMqConsumer.cs",
               "DocumentMoniker": "C:\\Users\\Elvin\\Repos\\JobBoard\\JobBoard.Infrastructure\\Messaging\\RabbitMqConsumer.cs",
               "RelativeDocumentMoniker": "JobBoard.Infrastructure\\Messaging\\RabbitMqConsumer.cs",
               "ToolTip": "C:\\Users\\Elvin\\Repos\\JobBoard\\JobBoard.Infrastructure\\Messaging\\RabbitMqConsumer.cs",
               "RelativeToolTip": "JobBoard.Infrastructure\\Messaging\\RabbitMqConsumer.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAANIAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAHcAAAAAAAAAAAAUwIoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-27T06:39:55.795Z",
               "EditorCaption": ""
@@ -116,39 +116,39 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "DependecyInjection.cs",
               "DocumentMoniker": "C:\\Users\\Elvin\\Repos\\JobBoard\\JobBoard.Infrastructure\\DependecyInjection.cs",
               "RelativeDocumentMoniker": "JobBoard.Infrastructure\\DependecyInjection.cs",
               "ToolTip": "C:\\Users\\Elvin\\Repos\\JobBoard\\JobBoard.Infrastructure\\DependecyInjection.cs",
               "RelativeToolTip": "JobBoard.Infrastructure\\DependecyInjection.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAgwC0AAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAgwCgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-30T09:25:13.502Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "JobService.cs",
               "DocumentMoniker": "C:\\Users\\Elvin\\Repos\\JobBoard\\JobBoard.Application\\Services\\JobService.cs",
               "RelativeDocumentMoniker": "JobBoard.Application\\Services\\JobService.cs",
               "ToolTip": "C:\\Users\\Elvin\\Repos\\JobBoard\\JobBoard.Application\\Services\\JobService.cs",
               "RelativeToolTip": "JobBoard.Application\\Services\\JobService.cs",
-              "ViewState": "AgIAACoAAAAAAAAAAAAQwDcAAAAtAAAAAAAAAA==",
+              "ViewState": "AgIAABQAAAAAAAAAAAAQwB0AAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-01T01:08:19.355Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "IRabbitMqConsumer.cs",
               "DocumentMoniker": "C:\\Users\\Elvin\\Repos\\JobBoard\\JobBoard.Application\\Abstractions\\IRabbitMqConsumer.cs",
               "RelativeDocumentMoniker": "JobBoard.Application\\Abstractions\\IRabbitMqConsumer.cs",
               "ToolTip": "C:\\Users\\Elvin\\Repos\\JobBoard\\JobBoard.Application\\Abstractions\\IRabbitMqConsumer.cs",
               "RelativeToolTip": "JobBoard.Application\\Abstractions\\IRabbitMqConsumer.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-01T01:33:13.233Z",
               "EditorCaption": ""
