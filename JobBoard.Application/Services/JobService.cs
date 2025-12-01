@@ -2,6 +2,7 @@
 using JobBoard.Application.DTOs;
 using JobBoard.Application.Events;
 using JobBoard.Core.Models;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,14 +17,17 @@ namespace JobBoard.Application.Services
         private readonly IRabbitMqPublisher _publisher;
         private readonly IRealtimeNotifier _notifier;
         private readonly IRabbitMqConsumer _consumer;
+        private readonly ILogger<JobService> _logger;
+      
 
 
-        public JobService(IJobRepository repo,IRabbitMqPublisher publisher, IRealtimeNotifier notifier, IRabbitMqConsumer consumer)
+        public JobService(IJobRepository repo,IRabbitMqPublisher publisher, IRealtimeNotifier notifier, IRabbitMqConsumer consumer,ILogger<JobService> logger)
         {
             _repo = repo;
             _publisher = publisher;
             _notifier = notifier;
             _consumer = consumer;
+            _logger = logger;
 
         }
         public async Task<int> ApplyAsync(int jobId, ApplyRequest request, CancellationToken ct = default)
@@ -47,20 +51,28 @@ namespace JobBoard.Application.Services
                 AppliedAt=app.AppliedAt
             };
 
-            await _publisher.PublishAsync(evt,ct);
-
-            await _consumer.ConsumeAsync(ct);
-
-            await _notifier.NotifyApplicationCreated(new
+            if (_consumer.IsConnected)
             {
+                _logger.LogError("Consumer is connected");
+                await _publisher.PublishAsync(evt,ct);
+            }
+            else
+            {
+                _logger.LogError("Consumer isn t connected");
+                await _publisher.PublishAsync(evt, ct);
+            }
 
-                id = app.Id,
-                jobId = jobId,
-                applicationId = app.Id,
-                applicantName = app.ApplicantName,
-                applicantEmail = app.ApplicantEmail,
-                appliedAt = app.AppliedAt
-            },ct);
+
+                await _notifier.NotifyApplicationCreated(new
+                {
+
+                    id = app.Id,
+                    jobId = jobId,
+                    applicationId = app.Id,
+                    applicantName = app.ApplicantName,
+                    applicantEmail = app.ApplicantEmail,
+                    appliedAt = app.AppliedAt
+                }, ct);
 
             return app.Id;
 

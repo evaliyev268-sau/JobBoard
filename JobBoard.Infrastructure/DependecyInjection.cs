@@ -36,7 +36,9 @@ namespace JobBoard.Infrastructure
 
             });
 
-            services.AddScoped<IRabbitMqConsumer,RabbitMqConsumer>();
+            services.AddSingleton<IRabbitMqConsumer, RabbitMqConsumerService>();
+            services.AddHostedService(sp => (RabbitMqConsumerService)sp.GetRequiredService<IRabbitMqConsumer>());
+
 
 
             return services;
