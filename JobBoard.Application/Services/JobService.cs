@@ -27,7 +27,7 @@ namespace JobBoard.Application.Services
 
 
 
-            _consumer.ConsumeAsync();
+          
 
         }
         public async Task<int> ApplyAsync(int jobId, ApplyRequest request, CancellationToken ct = default)
@@ -52,6 +52,10 @@ namespace JobBoard.Application.Services
             };
 
             await _publisher.PublishAsync(evt,ct);
+            
+            
+            await _consumer.ConsumeAsync(ct);
+
 
 
             await _notifier.NotifyApplicationCreated(new

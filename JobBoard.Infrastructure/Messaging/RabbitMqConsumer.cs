@@ -75,6 +75,8 @@ namespace JobBoard.Infrastructure.Messaging
             
             var consumer = new EventingBasicConsumer(_ch);
 
+
+
             if (consumer!=null)
             {
                 _logger.LogError("We are in the sender!1");
@@ -84,6 +86,12 @@ namespace JobBoard.Infrastructure.Messaging
                 _logger.LogError("We are in the sender!2");
             }
 
+
+            _ch.BasicConsume(
+                queue: _opt.QueueName,
+                exclusive: false, 
+                consumer: consumer
+                );
 
                 consumer.Received += (sender, ea) =>
                 {
@@ -137,7 +145,13 @@ namespace JobBoard.Infrastructure.Messaging
 
             _logger.LogInformation("Consumer Registered. Queue:{Queue}", _opt.QueueName);
 
-            return Task.CompletedTask;
+            return Task.Run(async () =>
+            {
+                while (!ct.IsCancellationRequested)
+                {
+                    await Task.Delay(1000, ct);
+                }
+            }, ct);
         }
 
         public void Dispose()
