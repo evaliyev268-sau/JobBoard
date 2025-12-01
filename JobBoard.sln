@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31903.59
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11222.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobBoard.Api", "JobBoard.Api\JobBoard.Api.csproj", "{E98F9957-AE92-4EF2-BEBC-2C43F4BE3EDD}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobBoard.Application", "JobBoard.Application\JobBoard.Application.csproj", "{E6B2BD43-F60A-436F-8DD9-09DBEEAFAADE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobBoard.Infrastructure", "JobBoard.Infrastructure\JobBoard.Infrastructure.csproj", "{F3938CB2-31C8-4CE3-9EAD-C5F96E6C4D01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobBoard.Gateway", "JobBoard.Gateway\JobBoard.Gateway.csproj", "{31861BC0-3E63-4CCB-AC1D-028F9C269ACD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,8 +85,23 @@ Global
 		{F3938CB2-31C8-4CE3-9EAD-C5F96E6C4D01}.Release|x64.Build.0 = Release|Any CPU
 		{F3938CB2-31C8-4CE3-9EAD-C5F96E6C4D01}.Release|x86.ActiveCfg = Release|Any CPU
 		{F3938CB2-31C8-4CE3-9EAD-C5F96E6C4D01}.Release|x86.Build.0 = Release|Any CPU
+		{31861BC0-3E63-4CCB-AC1D-028F9C269ACD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31861BC0-3E63-4CCB-AC1D-028F9C269ACD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31861BC0-3E63-4CCB-AC1D-028F9C269ACD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{31861BC0-3E63-4CCB-AC1D-028F9C269ACD}.Debug|x64.Build.0 = Debug|Any CPU
+		{31861BC0-3E63-4CCB-AC1D-028F9C269ACD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{31861BC0-3E63-4CCB-AC1D-028F9C269ACD}.Debug|x86.Build.0 = Debug|Any CPU
+		{31861BC0-3E63-4CCB-AC1D-028F9C269ACD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31861BC0-3E63-4CCB-AC1D-028F9C269ACD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31861BC0-3E63-4CCB-AC1D-028F9C269ACD}.Release|x64.ActiveCfg = Release|Any CPU
+		{31861BC0-3E63-4CCB-AC1D-028F9C269ACD}.Release|x64.Build.0 = Release|Any CPU
+		{31861BC0-3E63-4CCB-AC1D-028F9C269ACD}.Release|x86.ActiveCfg = Release|Any CPU
+		{31861BC0-3E63-4CCB-AC1D-028F9C269ACD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {650BD84B-6740-4499-9B07-E65F0228D0C4}
 	EndGlobalSection
 EndGlobal
